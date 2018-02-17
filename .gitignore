@@ -1,0 +1,22 @@
+# Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# Borrowed from Tenere
+.DS_Store
+.lxproject
+media
+applet
+application.linux32
+application.linux64
+application.windows32
+application.windows64
+application.macosx
