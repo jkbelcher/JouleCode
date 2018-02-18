@@ -114,7 +114,9 @@ public class Gem extends LXAbstractFixtureMapped {
 		switch (fromEdgeId) {
 		case 1:
 			switch (toEdgeId) {
-			case 5: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.LEFTRIGHT); 
+            case 2: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
+            case 4: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
+            case 5: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.LEFTRIGHT); 
 			case 9: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.DOWNUP); 
 			case 8: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.RIGHTLEFT); 
 			case 13: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.LEFTRIGHT); 
@@ -122,6 +124,8 @@ public class Gem extends LXAbstractFixtureMapped {
 			}
 		case 2:
 			switch (toEdgeId) {
+            case 1: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
+            case 3: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
 			case 6: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.LEFTRIGHT); 
 			case 10: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.DOWNUP); 
 			case 5: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.RIGHTLEFT); 
@@ -130,6 +134,8 @@ public class Gem extends LXAbstractFixtureMapped {
 			}
 		case 3:
 			switch (toEdgeId) {
+            case 2: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
+            case 4: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
 			case 7: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.LEFTRIGHT); 
 			case 11: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.DOWNUP); 
 			case 6: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.RIGHTLEFT); 
@@ -138,7 +144,10 @@ public class Gem extends LXAbstractFixtureMapped {
 			}
 		case 4:
 			switch (toEdgeId) {
-			case 8: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.LEFTRIGHT); 
+            case 1: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
+            case 3: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.DOWNUP); 
+            case 5: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.LEFTRIGHT); 
+            case 8: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.LEFTRIGHT); 
 			case 12: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.DOWNUP); 
 			case 7: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.RIGHTLEFT); 
 			case 16: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.LEFTRIGHT); 
@@ -166,7 +175,7 @@ public class Gem extends LXAbstractFixtureMapped {
 		case 7:
 			switch (toEdgeId) {
 			case 4: return new GemEdgeDirectionPair(GemEdgeDirection.LEFTRIGHT, GemEdgeDirection.UPDOWN);
-			case 7: return new GemEdgeDirectionPair(GemEdgeDirection.LEFTRIGHT, GemEdgeDirection.LEFTRIGHT);
+			case 8: return new GemEdgeDirectionPair(GemEdgeDirection.LEFTRIGHT, GemEdgeDirection.LEFTRIGHT);
 			case 12: return new GemEdgeDirectionPair(GemEdgeDirection.LEFTRIGHT, GemEdgeDirection.DOWNUP);
 			case 11: return new GemEdgeDirectionPair(GemEdgeDirection.RIGHTLEFT, GemEdgeDirection.DOWNUP);
 			case 6: return new GemEdgeDirectionPair(GemEdgeDirection.RIGHTLEFT, GemEdgeDirection.RIGHTLEFT);
@@ -374,26 +383,26 @@ public class Gem extends LXAbstractFixtureMapped {
 	
 	private GemEdgeDirection getLoadedDirection(int edgePosition) throws Exception {
 		switch (edgePosition) {
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-			return GemEdgeDirection.UPDOWN;
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-			return GemEdgeDirection.LEFTRIGHT;
-		case 9:
-		case 10:
-		case 11:
-		case 12:
-			return GemEdgeDirection.DOWNUP;
-		case 13:
-		case 14:
-		case 15:
-		case 16:
-			return GemEdgeDirection.LEFTRIGHT;			
+    		case 1:
+    		case 2:
+    		case 3:
+    		case 4:
+    			return GemEdgeDirection.UPDOWN;
+    		case 5:
+    		case 6:
+    		case 7:
+    		case 8:
+    			return GemEdgeDirection.LEFTRIGHT;
+    		case 9:
+    		case 10:
+    		case 11:
+    		case 12:
+    			return GemEdgeDirection.DOWNUP;
+    		case 13:
+    		case 14:
+    		case 15:
+    		case 16:
+    			return GemEdgeDirection.LEFTRIGHT;			
 		}
 		throw new Exception("Unknown edge position "+edgePosition+" for gem "+this.getGemName());
 	}

@@ -13,7 +13,9 @@ public class GemEdgeOrderAssistPattern extends JoulePattern {
 			for (GemEdge edge : gem.edges) {
 				int edgePos = edge.id;
 				int color;
-				int litPixels = (edgePos % 4) + 1;
+				int litPixels = (edgePos % 4);
+				litPixels = litPixels > 0 ? litPixels : 4;
+				
 				if (edgePos <= 4) {
 					color = LXColor.RED;
 					//litPixels = edgePos;
@@ -24,7 +26,7 @@ public class GemEdgeOrderAssistPattern extends JoulePattern {
 					color = LXColor.BLUE;
 					//litPixels = edgePos - 8;
 				} else {
-					color = LXColor.GREEN;
+					color = LXColor.scaleBrightness(LXColor.GREEN, 0.5f);
 					//litPixels = edgePos - 12;
 				}
 				

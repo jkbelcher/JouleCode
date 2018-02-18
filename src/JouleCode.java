@@ -110,7 +110,7 @@ public class JouleCode extends PApplet {
 	    	        	output.addDatagram(dg);
 	    	        }
 
-	      	    	//this.addOutput(output);		//Comment out for dev
+	      	    	this.addOutput(output);		//Comment out for dev
 				
 				} catch (UnknownHostException e) {
 					 println("Unknown Host Exception while constructing UDP output: " + e);
@@ -142,16 +142,16 @@ public class JouleCode extends PApplet {
     	  // Fancy transitions for BM2017 were implemented using a hack.
     	  // This was necessary because the LX blend collections were static final.
     	  // In this setup there were three channels: Patterns, Transitions, and the Blender.
-    	  if (lx.engine.getChannels().size()<3) {
-    		  model.isInitialized = true;
+//    	  if (lx.engine.getChannels().size()<3) {
+//    		  model.isInitialized = true;
     		  
 	    	  // For development, initialize to desired pattern.
 	    	  lx.engine.getChannel(0)
-	  	  		.addPattern(new VUMeter(lx))
-//	    	    .addPattern(new EdgeChannelPattern(lx))				//Testing
-//	    	    .addPattern(new GemEdgeColorPattern(lx))			//Testing
-//	    	    .addPattern(new GemEdgeOrderAssistPattern(lx))		//Testing
-//		        .addPattern(new SolidColorJoulePattern(lx))			//Testing, simple
+              .addPattern(new GemEdgeOrderAssistPattern(lx))      //Testing
+	    	    .addPattern(new EdgeChannelPattern(lx))				//Testing
+	    	    .addPattern(new GemEdgeColorPattern(lx))			//Testing
+		        .addPattern(new SolidColorJoulePattern(lx))			//Testing, simple
+                .addPattern(new VUMeter(lx))
 	    	    .addPattern(new GemEdgePattern(lx))
 	    	    .addPattern(new VertRainbowShiftPattern(lx))
 		  		.addPattern(new SimpleChasePattern(lx))
@@ -162,7 +162,7 @@ public class JouleCode extends PApplet {
     	  
 	    	  lx.engine.audio.enabled.setValue(true);
 	    	  lx.engine.audio.meter.gain.setValue(18);
-	    	  
+	    	  /*
 	    	  lx.engine.getChannel(0).enabled.setValue(false);
 	    	  lx.engine.getChannel(0).fader.setValue(0);
 	    	  
@@ -187,9 +187,9 @@ public class JouleCode extends PApplet {
 	    	  				.label.setValue("BlenderPlusChannel");
 	    	  blender.initialize();
 	    	  lx.engine.getChannel(2).fader.setValue(1);
-	    	  lx.engine.getChannel(2).enabled.setValue(true);
-	  
+	    	  lx.engine.getChannel(2).enabled.setValue(true);	  
     	  }
+    	  */
     }
 
     public void draw(){
