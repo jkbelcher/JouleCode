@@ -219,7 +219,8 @@ public class Gem extends LXAbstractFixtureMapped {
 			}
 		case 12:
 			switch (toEdgeId) {
-			case 9: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.UPDOWN);
+            case 1: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.UPDOWN);  //Charlie 1
+            case 9: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.UPDOWN);
 			case 10: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.UPDOWN);
 			case 11: return new GemEdgeDirectionPair(GemEdgeDirection.DOWNUP, GemEdgeDirection.UPDOWN);
 			case 7: return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.RIGHTLEFT);
@@ -382,6 +383,7 @@ public class Gem extends LXAbstractFixtureMapped {
 	}
 	
 	private GemEdgeDirection getLoadedDirection(int edgePosition) throws Exception {
+	    //This method returns the direction that the points were added to the model.
 		switch (edgePosition) {
     		case 1:
     		case 2:
