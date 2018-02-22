@@ -147,13 +147,13 @@ public class JouleCode extends PApplet {
     		  
 	    	  // For development, initialize to desired pattern.
 	    	  lx.engine.getChannel(0)
-              .addPattern(new GemEdgeOrderAssistPattern(lx))      //Testing
+                .addPattern(new VertRainbowShiftPattern(lx))
+                .addPattern(new GemEdgeOrderAssistPattern(lx))      //Testing
 	    	    .addPattern(new EdgeChannelPattern(lx))				//Testing
 	    	    .addPattern(new GemEdgeColorPattern(lx))			//Testing
 		        .addPattern(new SolidColorJoulePattern(lx))			//Testing, simple
                 .addPattern(new VUMeter(lx))
 	    	    .addPattern(new GemEdgePattern(lx))
-	    	    .addPattern(new VertRainbowShiftPattern(lx))
 		  		.addPattern(new SimpleChasePattern(lx))
 		  		.addPattern(new SpinnerPattern(lx))
 	  	  		.addPattern(new BubblesPattern(lx))
