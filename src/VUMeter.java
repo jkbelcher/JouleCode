@@ -134,11 +134,15 @@ public class VUMeter extends JoulePattern {
 		this.meter = new GraphicMeter(lx.engine.audio.input.mix, numMeterBands);
 		this.meterPeaks = new GraphicMeter(lx.engine.audio.input.mix, numMeterBands);
 		
-		this.gain.setValue(this.meter.gain.getValue());
-		this.range.setValue(this.meter.range.getValue());
-		this.attack.setValue(this.meter.attack.getValue());
-		this.release.setValue(this.meter.release.getValue());
-		this.releasePeaks.setValue(this.meterPeaks.getValue());
+        this.meter = new GraphicMeter(lx.engine.audio.input.mix, numMeterBands);
+        this.meterPeaks = new GraphicMeter(lx.engine.audio.input.mix, numMeterBands);
+        this.meter.gain.setValue(this.gain.getValue());
+        this.meterPeaks.gain.setValue(this.gain.getValue());
+        this.range.setValue(this.meter.range.getValue());
+        this.meter.attack.setValue(this.attack.getValue());
+        this.meterPeaks.attack.setValue(this.attack.getValue());
+        this.meter.release.setValue(this.release.getValue());
+        this.meterPeaks.release.setValue(this.releasePeaks.getValue());
 		
 		startModulator(this.meter);
 		startModulator(this.meterPeaks);
