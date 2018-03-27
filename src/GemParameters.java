@@ -7,9 +7,9 @@ public class GemParameters {
 	int x;
 	int y;
 	int z;
-	int xTilt;
-	int yTilt;
-	int zTilt;
+	double xTilt;
+	double yTilt;
+	double zTilt;
 	int[] edgeOrder;
 	int[] edgePixelCount;
 }

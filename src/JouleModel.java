@@ -260,9 +260,9 @@ public class JouleModel extends LXModel {
               new ParseInt(),	// x
               new ParseInt(),	// y
               new ParseInt(),	// z
-              new ParseInt(),	// xRotate
-              new ParseInt(),	// yRotate
-              new ParseInt(),	// zRotate
+              new ParseDouble(),	// xRotate
+              new ParseDouble(),	// yRotate
+              new ParseDouble(),	// zRotate
               new NotNull(),	// edgeOrder
               new NotNull(),	// edgePixelCount
       };
@@ -292,9 +292,9 @@ public class JouleModel extends LXModel {
                   p.x = Integer.parseInt(c.get("x").toString());
                   p.y = Integer.parseInt(c.get("y").toString());
                   p.z = Integer.parseInt(c.get("z").toString());
-                  p.xTilt = Integer.parseInt(c.get("xRotate").toString());
-                  p.yTilt = Integer.parseInt(c.get("yRotate").toString());
-                  p.zTilt = Integer.parseInt(c.get("zRotate").toString());
+                  p.xTilt = Double.parseDouble(c.get("xRotate").toString());
+                  p.yTilt = Double.parseDouble(c.get("yRotate").toString());
+                  p.zTilt = Double.parseDouble(c.get("zRotate").toString());
                   p.edgeOrder = Arrays.stream(c.get("edgeOrder").toString().split(subSeparator)).mapToInt(Integer::parseInt).toArray();
                   p.edgePixelCount = Arrays.stream(c.get("edgePixelCount").toString().split(subSeparator)).mapToInt(Integer::parseInt).toArray();
                 		  

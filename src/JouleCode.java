@@ -162,11 +162,10 @@ public class JouleCode extends PApplet {
     	  
 	    	  lx.engine.audio.enabled.setValue(true);
 	    	  lx.engine.audio.meter.gain.setValue(18);
-	    	  /*
-	    	  lx.engine.getChannel(0).enabled.setValue(false);
-	    	  lx.engine.getChannel(0).fader.setValue(0);
 	    	  
 	    	  //===Add fancy blending features===
+              lx.engine.getChannel(0).enabled.setValue(false);
+              lx.engine.getChannel(0).fader.setValue(0);
 	    	  
 	    	  //Channel of patterns that are the blends
 	    	  lx.engine.addChannel(new LXPattern[] {
@@ -188,8 +187,6 @@ public class JouleCode extends PApplet {
 	    	  blender.initialize();
 	    	  lx.engine.getChannel(2).fader.setValue(1);
 	    	  lx.engine.getChannel(2).enabled.setValue(true);	  
-    	  }
-    	  */
     }
 
     public void draw(){
