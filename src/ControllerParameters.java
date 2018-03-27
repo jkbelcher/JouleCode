@@ -1,7 +1,6 @@
-
 public class ControllerParameters {
-	int id;
-	String ipAddress;
-	int numberOfChannels;
-	int LEDsPerChannel;
+    int id;
+    String ipAddress;
+    int numberOfChannels;
+    int LEDsPerChannel;
 }

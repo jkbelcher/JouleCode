@@ -6,28 +6,28 @@ import heronarts.lx.LX;
 
 public abstract class JouleBlendPattern extends JoulePattern {
 
-	public JouleBlendPattern(LX lx) {
-		super(lx);
-	}
+    public JouleBlendPattern(LX lx) {
+        super(lx);
+    }
 
-	public JouleBlendPattern initialize(double startMs) {
-		this.startMs = startMs;
-		this.currentMs = startMs;
+    public JouleBlendPattern initialize(double startMs) {
+        this.startMs = startMs;
+        this.currentMs = startMs;
 
-		return this;
-	}
-	
-	protected double startMs = 0;
-	protected double currentMs = 0;
-	protected float percentComplete = 0f;
-	protected float percentRemaining = 1f;
-	
-	// Called by blender before every frame calculation.
-	public JouleBlendPattern setCurrentMs(double currentMs, float percentComplete) {
-		this.currentMs = currentMs;
-		this.percentComplete = percentComplete;
-		this.percentRemaining = 1f - percentComplete;
-		return this;
-	}
+        return this;
+    }
+
+    protected double startMs = 0;
+    protected double currentMs = 0;
+    protected float percentComplete = 0f;
+    protected float percentRemaining = 1f;
+
+    // Called by blender before every frame calculation.
+    public JouleBlendPattern setCurrentMs(double currentMs, float percentComplete) {
+        this.currentMs = currentMs;
+        this.percentComplete = percentComplete;
+        this.percentRemaining = 1f - percentComplete;
+        return this;
+    }
 
 }

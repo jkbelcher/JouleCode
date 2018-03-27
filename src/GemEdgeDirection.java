@@ -1,3 +1,3 @@
 public enum GemEdgeDirection {
-	RIGHTLEFT, LEFTRIGHT, DOWNUP, UPDOWN		
+    RIGHTLEFT, LEFTRIGHT, DOWNUP, UPDOWN
 }

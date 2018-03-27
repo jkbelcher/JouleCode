@@ -40,7 +40,6 @@ public class GemEdgeColorPattern extends JoulePattern {
 		for (GemEdgeColorPair edge : this.edges) {
 			this.setColor(edge.edge, edge.color);
 		}
-
 	}
 	
 	private class GemEdgeColorPair {
@@ -53,4 +52,5 @@ public class GemEdgeColorPattern extends JoulePattern {
 			this.color = c;
 		}
 	}
+	
 }
