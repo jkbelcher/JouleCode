@@ -10,17 +10,15 @@ public abstract class JouleBlendPattern extends JoulePattern {
 		super(lx);
 	}
 
-	public JouleBlendPattern initialize(double startMs, double endMs) {
+	public JouleBlendPattern initialize(double startMs) {
 		this.startMs = startMs;
 		this.currentMs = startMs;
-		this.endMs = endMs;
 
 		return this;
 	}
 	
 	protected double startMs = 0;
 	protected double currentMs = 0;
-	protected double endMs = 0;
 	protected float percentComplete = 0f;
 	protected float percentRemaining = 1f;
 	

@@ -13,7 +13,7 @@ import processing.core.PApplet;
 public class BlenderPlusPattern extends JoulePattern {
 
   public final CompoundParameter transitionTimeSecs = (CompoundParameter)
-		    new CompoundParameter("Transition Time", 3, .1, 30)
+		    new CompoundParameter("Transition Time", 10, .1, 30)
 		    .setDescription("Sets the duration of blending transitions between patterns");
   public final CompoundParameter autoCycleTimeSecs = (CompoundParameter)
 		    new CompoundParameter("Cycle Time", 10, .1, 60)
@@ -54,7 +54,6 @@ public class BlenderPlusPattern extends JoulePattern {
 	        });
 		
 		isChanging = false;
-		this.lastFrame = this.runMs-16;
 		this.lastChangeTime = 0;
 		calcNextChangeTime();
 		this.p1 = this.targetChannel.patterns.get(3);
@@ -79,7 +78,6 @@ public class BlenderPlusPattern extends JoulePattern {
 		this.nextChangeTime = this.lastChangeTime + (this.autoCycleTimeSecs.getValue() * 1000f);
 	}
 
-	double lastFrame=0;
 	double lastChangeTime=0;
 	double nextChangeTime=0;
 	Boolean isChanging = false;
@@ -98,7 +96,7 @@ public class BlenderPlusPattern extends JoulePattern {
 		this.p2.onActive();	
 		
 		this.transitionPattern = this.getNextTransitionPattern();
-		this.transitionPattern.initialize(transitionStartTime, transitionEndTime);
+		this.transitionPattern.initialize(transitionStartTime);
 		this.transitionPattern.onActive();
 	}
 	
@@ -163,8 +161,6 @@ public class BlenderPlusPattern extends JoulePattern {
 				colors[i] = c1[i];
 			}
 		}
-		
-		this.lastFrame = this.runMs;
 	}
 	
 	protected LXPattern getNextPattern() {
