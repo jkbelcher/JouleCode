@@ -28,10 +28,11 @@ public class SimpleStripe extends LXPattern {
     public void run(double deltaMs) {
         float xPos = this.xPos.getValuef();
         float falloff = 100 / this.size.getValuef();
-        for (LXPoint p : model.points) {
+        /*for (LXPoint p : model.points) {
             // Render each point based on its distance from a moving target
             // position in the x axis
             colors[p.index] = palette.getColor(p, PApplet.max(0, 100 - falloff * PApplet.abs(p.x - xPos)));
         }
+        */
     }
 }

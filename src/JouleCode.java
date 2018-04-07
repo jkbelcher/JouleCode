@@ -6,7 +6,7 @@ import java.util.List;
 import heronarts.lx.LXPattern;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.output.LXDatagramOutput;
-import heronarts.p3lx.LXStudio;
+import heronarts.lx.studio.LXStudio;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 
@@ -45,6 +45,59 @@ public class JouleCode extends PApplet {
          */
     }
 
+    public void initialize(LXStudio lx, LXStudio.UI ui) {
+        // Add custom LXComponents or LXOutput objects to the engine here, before the UI is constructed
+
+        lx.registerPattern(SimpleChasePattern.class);
+        lx.registerPattern(GemEdgePattern.class);
+        lx.registerPattern(SpinnerPattern.class);
+        lx.registerPattern(VUMeter.class);
+        lx.registerPattern(BubblesPattern.class);
+        lx.registerPattern(VertRainbowShiftPattern.class);
+
+        // Cast the model to access model-specific properties from within this overridden initialize() function.
+        JouleModel m = (JouleModel) model;
+
+        try {
+            // Foreach controller
+            for (BeagleboneController controller : m.controllers) {
+                LEDScapeDatagram datagram;
+                datagram = (LEDScapeDatagram) new LEDScapeDatagram(controller.params.numberOfChannels,
+                        controller.params.LEDsPerChannel, controller).setAddress(controller.params.ipAddress)
+                                .setPort(7890);
+                JouleCode.datagrams.add(datagram);
+            }
+
+            // DEPRICATED: TCP output
+            // LEDScapeOutput output = new LEDScapeOutput(lx, "192.168.111.211", 7890, controller.params.numberOfChannels, controller.params.LEDsPerChannel, controller);
+
+            // Create a UDP LXDatagramOutput to own these packets
+            LXDatagramOutput output = new LXDatagramOutput(lx);
+            for (LEDScapeDatagram dg : datagrams) {
+                output.addDatagram(dg);
+            }
+
+            //lx.addOutput(output); // Comment out for dev
+
+        } catch (UnknownHostException e) {
+            println("Unknown Host Exception while constructing UDP output: " + e);
+            e.printStackTrace();
+        } catch (SocketException e) {
+            println("Socket Excpetion while constructing UDP output: " + e);
+            e.printStackTrace();
+        }
+    }
+
+    
+    public void onUIReady(LXStudio lx, LXStudio.UI ui) {
+        // The UI is now ready, can add custom UI components if desired
+        // UIWalls is from example project. Leaving in for now because
+        // it prevents an error.
+        ui.preview.addComponent(new UIWalls(model));
+        //ui.leftPane.engine.setVisible(true);
+
+    }
+
     public void setup() {
         JouleCode.applet = this;
 
@@ -66,61 +119,7 @@ public class JouleCode extends PApplet {
 
         // Create the P3LX engine
         // Third parameter=true starts in Multi-threaded mode
-        lx = new LXStudio(this, model, true) {
-            @Override
-            protected void initialize(LXStudio lx, LXStudio.UI ui) {
-                // Add custom LXComponents or LXOutput objects to the engine here, before the UI is constructed
-
-                lx.registerPattern(SimpleChasePattern.class);
-                lx.registerPattern(GemEdgePattern.class);
-                lx.registerPattern(SpinnerPattern.class);
-                lx.registerPattern(VUMeter.class);
-                lx.registerPattern(BubblesPattern.class);
-                lx.registerPattern(VertRainbowShiftPattern.class);
-
-                // Cast the model to access model-specific properties from within this overridden initialize() function.
-                JouleModel m = (JouleModel) model;
-
-                try {
-                    // Foreach controller
-                    for (BeagleboneController controller : m.controllers) {
-                        LEDScapeDatagram datagram;
-                        datagram = (LEDScapeDatagram) new LEDScapeDatagram(controller.params.numberOfChannels,
-                                controller.params.LEDsPerChannel, controller).setAddress(controller.params.ipAddress)
-                                        .setPort(7890);
-                        JouleCode.datagrams.add(datagram);
-                    }
-
-                    // DEPRICATED: TCP output
-                    // LEDScapeOutput output = new LEDScapeOutput(lx, "192.168.111.211", 7890, controller.params.numberOfChannels, controller.params.LEDsPerChannel, controller);
-
-                    // Create a UDP LXDatagramOutput to own these packets
-                    LXDatagramOutput output = new LXDatagramOutput(lx);
-                    for (LEDScapeDatagram dg : datagrams) {
-                        output.addDatagram(dg);
-                    }
-
-                    this.addOutput(output); // Comment out for dev
-
-                } catch (UnknownHostException e) {
-                    println("Unknown Host Exception while constructing UDP output: " + e);
-                    e.printStackTrace();
-                } catch (SocketException e) {
-                    println("Socket Excpetion while constructing UDP output: " + e);
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            protected void onUIReady(LXStudio lx, LXStudio.UI ui) {
-                // The UI is now ready, can add custom UI components if desired
-                // UIWalls is from example project. Leaving in for now because
-                // it prevents an error.
-                ui.preview.addComponent(new UIWalls(model));
-                ui.leftPane.engine.setVisible(true);
-
-            }
-        };
+        lx = new LXStudio(this, model, true);
 
         // Use multi-threading for network output
         // lx.engine.output.mode.setValue(LXOutput.Mode.RAW);
@@ -134,9 +133,9 @@ public class JouleCode extends PApplet {
         // Fancy transitions for BM2017 were implemented using a hack.
         // This was necessary because the LX blend collections were static final.
         // In this setup there were three channels: Patterns, Transitions, and the Blender.
-
+/*
         // For development, initialize to desired pattern.
-        lx.engine.getChannel(0)
+        lx.engine.getChannel(0).
                 //.addPattern(new GemEdgeOrderAssistPattern(lx))   //Testing
                 //.addPattern(new EdgeChannelPattern(lx))          //Testing
                 //.addPattern(new GemEdgeColorPattern(lx))         //Testing
@@ -176,6 +175,7 @@ public class JouleCode extends PApplet {
         blender.initialize();
         lx.engine.getChannel(2).fader.setValue(1);
         lx.engine.getChannel(2).enabled.setValue(true);
+        */
     }
 
     public void draw() {
