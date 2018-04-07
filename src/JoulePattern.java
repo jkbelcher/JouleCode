@@ -17,7 +17,11 @@ public abstract class JoulePattern extends LXPattern {
     }
     
     public static void randomizeParameter(BoundedParameter parameter) {
-        float newValue = (float) ((Math.random()*(parameter.range.max-parameter.range.min))+parameter.range.min);
+        randomizeParameter(parameter, parameter.range.min, parameter.range.max);
+    }
+
+    public static void randomizeParameter(BoundedParameter parameter, double min, double max) {
+        float newValue = (float) ((Math.random()*(max-min))+min);
         parameter.setValue(newValue);
     }
     
@@ -31,6 +35,6 @@ public abstract class JoulePattern extends LXPattern {
     }
     
     public int getRandomColor(float brightness) {
-        return LXColor.hsb(Math.random()*360, 100, brightness);
+        return LXColor.hsb(Math.random() * 360.0, 100, brightness);
     }	
 }
