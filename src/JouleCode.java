@@ -55,7 +55,8 @@ public class JouleCode extends PApplet {
         lx.registerPattern(VUMeter.class);
         lx.registerPattern(BubblesPattern.class);
         lx.registerPattern(VertRainbowShiftPattern.class);
-
+        lx.registerPattern(RisingSquaresPattern.class);
+        
         // Cast the model to access model-specific properties from within this overridden initialize() function.
         JouleModel m = (JouleModel) model;
 
@@ -141,6 +142,7 @@ public class JouleCode extends PApplet {
                 //.addPattern(new EdgeChannelPattern(lx))          //Testing
                 //.addPattern(new GemEdgeColorPattern(lx))         //Testing
                 //.addPattern(new SolidColorJoulePattern(lx))      //Testing, simple
+                .addPattern(new RisingSquaresPattern(lx))
                 .addPattern(new VertRainbowShiftPattern(lx))
                 .addPattern(new VUMeter(lx))
                 .addPattern(new GemEdgePattern(lx))
