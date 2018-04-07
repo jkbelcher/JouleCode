@@ -3,6 +3,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import heronarts.lx.LXChannel;
 import heronarts.lx.LXPattern;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.output.LXDatagramOutput;
@@ -133,9 +134,9 @@ public class JouleCode extends PApplet {
         // Fancy transitions for BM2017 were implemented using a hack.
         // This was necessary because the LX blend collections were static final.
         // In this setup there were three channels: Patterns, Transitions, and the Blender.
-/*
+
         // For development, initialize to desired pattern.
-        lx.engine.getChannel(0).
+        ((LXChannel)lx.engine.getChannel(0))
                 //.addPattern(new GemEdgeOrderAssistPattern(lx))   //Testing
                 //.addPattern(new EdgeChannelPattern(lx))          //Testing
                 //.addPattern(new GemEdgeColorPattern(lx))         //Testing
@@ -147,7 +148,7 @@ public class JouleCode extends PApplet {
                 .addPattern(new SpinnerPattern(lx))
                 .addPattern(new BubblesPattern(lx))
                 .focusedPattern.setValue(1);
-        lx.engine.getChannel(0).goNext();
+        ((LXChannel)lx.engine.getChannel(0)).goNext();
 
         lx.engine.audio.enabled.setValue(true);
         lx.engine.audio.meter.gain.setValue(18);
@@ -169,13 +170,12 @@ public class JouleCode extends PApplet {
 
         // Channel & Pattern that does the blending
         BlenderPlusPattern blender = new BlenderPlusPattern(lx)
-                .setTargetChannel(lx.engine.getChannel(0), lx.engine.getChannel(1));
+                .setTargetChannel((LXChannel)lx.engine.getChannel(0), (LXChannel)lx.engine.getChannel(1));
         lx.engine.addChannel(new LXPattern[] { blender })
                 .label.setValue("BlenderPlusChannel");
         blender.initialize();
         lx.engine.getChannel(2).fader.setValue(1);
         lx.engine.getChannel(2).enabled.setValue(true);
-        */
     }
 
     public void draw() {
