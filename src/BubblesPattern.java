@@ -2,8 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 import heronarts.lx.LX;
 import heronarts.lx.color.LXColor;
+import heronarts.lx.effect.StrobeEffect.Waveshape;
+import heronarts.lx.modulator.LXWaveshape;
 import heronarts.lx.parameter.BooleanParameter;
 import heronarts.lx.parameter.CompoundParameter;
+import heronarts.lx.parameter.EnumParameter;
 import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 
@@ -11,16 +14,25 @@ import heronarts.lx.parameter.LXParameterListener;
 public class BubblesPattern extends JoulePattern {
 
     public final CompoundParameter density = 
-            new CompoundParameter("Density", .2, 0, 1)
+            new CompoundParameter("Density", .2, 0, .45)
             .setDescription("Density of bubbles");
     
     public final CompoundParameter minBubbleSpeed = 
-            new CompoundParameter("MinSpeed", 1, 5, 100)
+            new CompoundParameter("MinSpeed", 5, 3, 50)
             .setDescription("Minimum pixel moves per second");
     
     public final CompoundParameter maxBubbleSpeed = 
-            new CompoundParameter("MaxSpeed", 60, 5, 150)
+            new CompoundParameter("MaxSpeed", 60, 5, 75)
             .setDescription("Maximum pixel moves per second");
+    
+    public enum BubbleColorMode {
+        RAINBOW,
+        SOLID
+      };
+
+    public final EnumParameter<BubbleColorMode> colorMode =
+        new EnumParameter<BubbleColorMode>("ClrMode", BubbleColorMode.RAINBOW)
+        .setDescription("Color mode for new bubbles");
     
     public final BooleanParameter beat = 
             new BooleanParameter("Beat")
@@ -36,6 +48,7 @@ public class BubblesPattern extends JoulePattern {
         addParameter(density);
         addParameter(minBubbleSpeed);
         addParameter(maxBubbleSpeed);
+        addParameter(colorMode);
         // addParameter(beat);
 
         this.beat.addListener(new LXParameterListener() {
@@ -46,13 +59,32 @@ public class BubblesPattern extends JoulePattern {
     }
 
     public void onActive() {
+        this.setRandomParameters();
+        this.safetyCheckParameters();
         initialize();
     }
+    
+    public void setRandomParameters() {
+        randomizeParameter(this.density);
+        randomizeParameter(this.minBubbleSpeed);
+        randomizeParameter(this.maxBubbleSpeed, this.minBubbleSpeed.getValue(), this.maxBubbleSpeed.range.max);
+        randomizeParameter(this.colorMode);
+    }
+    
+    void safetyCheckParameters() {
+        if (this.maxBubbleSpeed.getValuef() <= this.minBubbleSpeed.getValuef() + 1) {
+            this.maxBubbleSpeed.setValue(this.minBubbleSpeed.getValue() + 5);
+        }
+    }
+    
+    int bubbleColorSolid;
 
     private void initialize() {
         this.edges = new ArrayList<EdgeBubbleCollection>();
 
         float density = this.density.getValuef();
+        
+        bubbleColorSolid = getRandomColor();
 
         for (Gem gem : this.model.gems) {
             for (GemEdge gme : gem.gravityMappedEdges) {
@@ -73,9 +105,15 @@ public class BubblesPattern extends JoulePattern {
 
     private Bubble createBubble() {
         Bubble b = new Bubble();
-        b.color = LXColor.hsb(Math.random() * 360.0, 100, 100);
+        
+        switch (this.colorMode.getEnum()) {
+            case RAINBOW: b.color = getRandomColor(); break;
+            case SOLID: b.color = this.bubbleColorSolid; break;
+        };
+        
         b.pos = 0;
 
+        this.safetyCheckParameters();
         float minSpeed = this.minBubbleSpeed.getValuef();
         float maxSpeed = this.maxBubbleSpeed.getValuef();
         float speedRange = Math.max(maxSpeed - minSpeed, 1);
@@ -110,35 +148,24 @@ public class BubblesPattern extends JoulePattern {
                     bubble.nextMoveTime = this.runMs + bubble.timePerMove;
                     if (bubble.pos > ebc.maxPos) {
                         expiredBubbles.add(bubble);
-                        newBubbles.add(createBubble());
+                        //newBubbles.add(createBubble());
                     }
                 }
             }
 
-            /* // This might work but I removed it when troubleshooting another problem.
-            Iterator<Bubble> bubIterator = ebc.bubbles.iterator();
-            while (bubIterator.hasNext()) {
-                Bubble bubble = bubIterator.next();
-                PApplet.println("bubble"); // Is it time to increment?
-                if (this.runMs > bubble.nextMoveTime) {
-                    PApplet.println("incrementing bubble");
-                    bubble.pos++;
-                    bubble.nextMoveTime = this.runMs + bubble.timePerMove;
-                    if (bubble.pos > ebc.maxPos) {
-                        bubIterator.remove();
-                        newBubbles.add(createBubble());
-                    }
-                }
-            }
-            */
-
+            // Remove expired bubbles
             for (Bubble expiredBubble : expiredBubbles) {
                 ebc.bubbles.remove(expiredBubble);
             }
-            for (Bubble newBubble : newBubbles) {
-                ebc.bubbles.add(newBubble);
+            
+            // Create new bubbles
+            // *Could change this to calculate density across whole structure, and add to random group.
+            int targetNumBubbles = (int)(this.density.getValuef() * (float)ebc.edge.getNumPoints());
+            int numNewBubbles = targetNumBubbles - ebc.bubbles.size();
+            for (int n = 0; n < numNewBubbles; n++) {
+                ebc.bubbles.add(createBubble());
             }
-
+            
             // Render every bubble
             for (Bubble bubble : ebc.bubbles) {
                 colors[ebc.edge.getPoint(bubble.pos, ebc.edgeDirection).index] = bubble.color;
