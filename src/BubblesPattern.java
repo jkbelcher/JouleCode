@@ -58,6 +58,7 @@ public class BubblesPattern extends JoulePattern {
             for (GemEdge gme : gem.gravityMappedEdges) {
                 EdgeBubbleCollection c = new EdgeBubbleCollection();
                 c.edge = gme;
+                c.edgeDirection = (Math.random() < 0.5) ? gme.getDirectionAntiGravity() : GemEdge.getOppositeDirection(gme.getDirectionAntiGravity());
                 c.maxPos = gme.getNumPoints() - 1;
                 int numBubbles = (int) (((float) gme.getNumPoints()) * density);
                 for (int b = 0; b < numBubbles; b++) {
@@ -140,7 +141,7 @@ public class BubblesPattern extends JoulePattern {
 
             // Render every bubble
             for (Bubble bubble : ebc.bubbles) {
-                colors[ebc.edge.getPoint(bubble.pos, ebc.edge.getDirectionAntiGravity()).index] = bubble.color;
+                colors[ebc.edge.getPoint(bubble.pos, ebc.edgeDirection).index] = bubble.color;
             }
         }
     }
@@ -154,6 +155,7 @@ public class BubblesPattern extends JoulePattern {
 
     public class EdgeBubbleCollection {
         public GemEdge edge;
+        GemEdgeDirection edgeDirection;
         public int maxPos;
         public List<Bubble> bubbles = new ArrayList<Bubble>();
     }
