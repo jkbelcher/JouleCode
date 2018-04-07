@@ -10,12 +10,16 @@ public class SpinnerPattern extends JoulePattern {
     private static final float RADIANS_PER_REVOLUTION = 2.0f;
 
     public final CompoundParameter spinRPM = 
-            new CompoundParameter("Spin", 45, 0, 300)
+            new CompoundParameter("Spin", 20, 0, 120)
             .setDescription("Spin Speed");
     
     public final CompoundParameter spinRPM2 = 
-            new CompoundParameter("Spin2", 0, 0, 300)
+            new CompoundParameter("Spin2", 0, 0, 120)
             .setDescription("Other Spin Speed");
+    
+    public final CompoundParameter maxRandSpin = 
+            new CompoundParameter("MaxRandSpin", 20, 2, 60)
+            .setDescription("Maximum random spin speed");    
 
     private final LXTransform transform = new LXTransform();
     private float positionSpin = 0;
@@ -26,12 +30,22 @@ public class SpinnerPattern extends JoulePattern {
 
         addParameter(spinRPM);
         addParameter(spinRPM2);
-
+        addParameter(maxRandSpin);
+        
         this.projection = new LXProjection(this.model);
-        this.projection.translate(this.model.cx, this.model.cy, this.model.cz);
+        this.projection.translate(0-this.model.cx, 0-this.model.cy, 0-this.model.cz);
     }
 
     LXProjection projection;
+    
+    public void onActive() {
+        this.setRandomParameters();
+    }
+    
+    public void setRandomParameters() {
+        randomizeParameter(this.spinRPM, 1, this.maxRandSpin.getValue());
+        randomizeParameter(this.spinRPM2, 1, this.maxRandSpin.getValue());
+    }
 
     @Override
     protected void run(double deltaMs) {

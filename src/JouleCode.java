@@ -142,13 +142,13 @@ public class JouleCode extends PApplet {
                 //.addPattern(new EdgeChannelPattern(lx))          //Testing
                 //.addPattern(new GemEdgeColorPattern(lx))         //Testing
                 //.addPattern(new SolidColorJoulePattern(lx))      //Testing, simple
-        .addPattern(new BubblesPattern(lx))
+                .addPattern(new SpinnerPattern(lx))
+                .addPattern(new BubblesPattern(lx))
                 .addPattern(new RisingSquaresPattern(lx))
                 .addPattern(new VertRainbowShiftPattern(lx))
                 .addPattern(new VUMeter(lx))
                 .addPattern(new GemEdgePattern(lx))
                 .addPattern(new SimpleChasePattern(lx))
-                .addPattern(new SpinnerPattern(lx))
                 .focusedPattern.setValue(1);
         ((LXChannel)lx.engine.getChannel(0)).goNext();
 /*

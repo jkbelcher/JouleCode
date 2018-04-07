@@ -14,7 +14,7 @@ import heronarts.lx.parameter.LXParameterListener;
 public class BubblesPattern extends JoulePattern {
 
     public final CompoundParameter density = 
-            new CompoundParameter("Density", .2, 0, .45)
+            new CompoundParameter("Density", .2, 0.05, .45)
             .setDescription("Density of bubbles");
     
     public final CompoundParameter minBubbleSpeed = 
