@@ -6,6 +6,7 @@ import java.util.List;
 import heronarts.lx.LXChannel;
 import heronarts.lx.LXPattern;
 import heronarts.lx.color.LXColor;
+import heronarts.lx.midi.LXMidiInput;
 import heronarts.lx.output.LXDatagramOutput;
 import heronarts.lx.studio.LXStudio;
 import processing.core.PApplet;
