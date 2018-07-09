@@ -104,10 +104,16 @@ public class Gem extends LXAbstractFixtureMapped {
         return transform;
     }
 
-    public GemEdgeDirectionPair getEdgeDirections(int fromEdgeId, int toEdgeId) throws Exception {
+    public GemEdgeDirectionPair getEdgeDirections(String gemType, int fromEdgeId, int toEdgeId) throws Exception {
         // *Some gems have jumpered edges and will transition between two non-touching edges.
         // We will have to add the map for these when we find them.
         // If there are two conflicting map directions in a jumper, we will have to add an optional override in the config file.
+        
+        //Special cases for GoGo gems because they have 4 channels that all feed from the top
+        if (gemType.equalsIgnoreCase("gogo") && (fromEdgeId >=1 && fromEdgeId <= 4) && (toEdgeId >= 9 && toEdgeId <= 12)) {
+            return new GemEdgeDirectionPair(GemEdgeDirection.UPDOWN, GemEdgeDirection.UPDOWN);
+        }
+                
         switch (fromEdgeId) {
         case 1:
             switch (toEdgeId) {
@@ -418,7 +424,7 @@ public class Gem extends LXAbstractFixtureMapped {
         int firstEdgeId = this.params.edgeOrder[0];
         int secondEdgeId = this.params.edgeOrder[1];
         GemEdgeDirection firstEdgeDirectionLoaded = getLoadedDirection(firstEdgeId);
-        GemEdgeDirection firstEdgeDirectionMapped = getEdgeDirections(firstEdgeId, secondEdgeId).fromEdgeDirection;
+        GemEdgeDirection firstEdgeDirectionMapped = getEdgeDirections(p.gemType, firstEdgeId, secondEdgeId).fromEdgeDirection;
         this.edgesByPosition.get(firstEdgeId).onLoadComplete(firstEdgeDirectionLoaded, firstEdgeDirectionMapped);
 
         // Do remaining edges by calculating from the preceding edge
@@ -426,7 +432,7 @@ public class Gem extends LXAbstractFixtureMapped {
             int edgeIdFrom = this.params.edgeOrder[i - 1];
             int edgeIdTo = this.params.edgeOrder[i];
             GemEdgeDirection edgeDirectionLoaded = getLoadedDirection(edgeIdTo);
-            GemEdgeDirection edgeDirectionMapped = getEdgeDirections(edgeIdFrom, edgeIdTo).toEdgeDirection;
+            GemEdgeDirection edgeDirectionMapped = getEdgeDirections(p.gemType, edgeIdFrom, edgeIdTo).toEdgeDirection;
             this.edgesByPosition.get(edgeIdTo).onLoadComplete(edgeDirectionLoaded, edgeDirectionMapped);
         }
 
@@ -528,8 +534,46 @@ public class Gem extends LXAbstractFixtureMapped {
                     mappedPoints.put(i++, entry.getValue());
                 }
             }
+        } else if (this.params.gemType.equalsIgnoreCase("gogo")) {
+            // GoGo gems are special because they take 4 channels.
+            // First channel
+            int i = 0;
+            for (int iEdgeOrder = 0; iEdgeOrder < 3; iEdgeOrder++) {
+                int edgePosition = this.params.edgeOrder[iEdgeOrder];
+                for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
+                        .entrySet()) {
+                    mappedPoints.put(i++, entry.getValue());
+                }
+            }
+            // Second channel
+            i = this.controller.params.LEDsPerChannel;
+            for (int iEdgeOrder = 3; iEdgeOrder < 6; iEdgeOrder++) {
+                int edgePosition = this.params.edgeOrder[iEdgeOrder];
+                for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
+                        .entrySet()) {
+                    mappedPoints.put(i++, entry.getValue());
+                }
+            }
+            // Third channel
+            i = this.controller.params.LEDsPerChannel * 2;
+            for (int iEdgeOrder = 6; iEdgeOrder < 9; iEdgeOrder++) {
+                int edgePosition = this.params.edgeOrder[iEdgeOrder];
+                for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
+                        .entrySet()) {
+                    mappedPoints.put(i++, entry.getValue());
+                }
+            }
+            // Fourth channel
+            i = this.controller.params.LEDsPerChannel * 3;
+            for (int iEdgeOrder = 9; iEdgeOrder < 12; iEdgeOrder++) {
+                int edgePosition = this.params.edgeOrder[iEdgeOrder];
+                for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
+                        .entrySet()) {
+                    mappedPoints.put(i++, entry.getValue());
+                }
+            }
         } else {
-            // Normal gem mapping, i.e. not charlie gem.
+            // Normal gem mapping, i.e. not charlie or gogo gem.
             int i = 0;
             for (int edgePosition : this.params.edgeOrder) {
                 for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
