@@ -50,6 +50,8 @@ public class JouleCode extends PApplet {
 
     public void initialize(LXStudio lx, LXStudio.UI ui) {
         // Add custom LXComponents or LXOutput objects to the engine here, before the UI is constructed
+        
+        // Joule Patterns
         lx.registerPattern(SimpleChasePattern.class);
         lx.registerPattern(GemEdgePattern.class);
         lx.registerPattern(SpinnerPattern.class);
@@ -57,6 +59,12 @@ public class JouleCode extends PApplet {
         lx.registerPattern(BubblesPattern.class);
         lx.registerPattern(VertRainbowShiftPattern.class);
         lx.registerPattern(RisingSquaresPattern.class);
+        
+        // Joule Test Patterns
+        lx.registerPattern(GemEdgeOrderAssistPattern.class);
+        lx.registerPattern(EdgeChannelPattern.class);
+        lx.registerPattern(GemEdgeColorPattern.class);
+        lx.registerPattern(SolidColorJoulePattern.class);
         
         // Cast the model to access model-specific properties from within this overridden initialize() function.
         JouleModel m = (JouleModel) model;

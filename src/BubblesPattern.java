@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.effect.StrobeEffect.Waveshape;
 import heronarts.lx.modulator.LXWaveshape;
@@ -11,6 +12,7 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 
 // Bubbles is (c)Copyright Justin Belcher 2017
+@LXCategory(LXCategory.OTHER)
 public class BubblesPattern extends JoulePattern {
 
     public final CompoundParameter density = 

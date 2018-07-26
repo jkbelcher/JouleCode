@@ -2,9 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 
 // This class was used during development to find issues with the model.
+@LXCategory(LXCategory.TEST)
 public class GemEdgeColorPattern extends JoulePattern {
 
 	private final List<GemEdgeColorPair> edges;

@@ -1,7 +1,9 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.DiscreteParameter;
 
+@LXCategory(LXCategory.TEST)
 public class EdgeChannelPattern extends JoulePattern {
 
     public final DiscreteParameter channelIndex = 

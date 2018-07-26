@@ -1,10 +1,12 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.transform.LXProjection;
 import heronarts.lx.transform.LXTransform;
 import heronarts.lx.transform.LXVector;
 
+@LXCategory(LXCategory.OTHER)
 public class SpinnerPattern extends JoulePattern {
 
     private static final float RADIANS_PER_REVOLUTION = 2.0f;

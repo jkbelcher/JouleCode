@@ -2,11 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 
+@LXCategory(LXCategory.OTHER)
 public class RisingSquaresPattern extends JoulePattern {
 
     public final DiscreteParameter numSquares = 

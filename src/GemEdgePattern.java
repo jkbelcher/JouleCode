@@ -2,8 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.parameter.CompoundParameter;
 
+@LXCategory(LXCategory.OTHER)
 public class GemEdgePattern extends JoulePattern {
 
     public final CompoundParameter flipsPerSec = 

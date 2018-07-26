@@ -1,6 +1,8 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 
+@LXCategory(LXCategory.TEST)
 public class GemEdgeOrderAssistPattern extends JoulePattern {
 
     public GemEdgeOrderAssistPattern(LX lx) {

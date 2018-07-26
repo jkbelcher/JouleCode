@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.audio.GraphicMeter;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.BoundedParameter;
@@ -9,6 +10,7 @@ import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 
+@LXCategory(LXCategory.OTHER)
 public class VUMeter extends JoulePattern {
 
     /////////////////////////////////////////////////

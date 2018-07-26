@@ -1,4 +1,5 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.BooleanParameter;
 import heronarts.lx.parameter.CompoundParameter;
@@ -7,6 +8,7 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
+@LXCategory(LXCategory.OTHER)
 public class SimpleChasePattern extends JoulePattern {
 
     static final long TICKS_PER_SEC = 1000;
