@@ -3,6 +3,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import heronarts.lx.LX;
 import heronarts.lx.LXChannel;
 import heronarts.lx.LXPattern;
 import heronarts.lx.color.LXColor;
@@ -49,7 +50,6 @@ public class JouleCode extends PApplet {
 
     public void initialize(LXStudio lx, LXStudio.UI ui) {
         // Add custom LXComponents or LXOutput objects to the engine here, before the UI is constructed
-
         lx.registerPattern(SimpleChasePattern.class);
         lx.registerPattern(GemEdgePattern.class);
         lx.registerPattern(SpinnerPattern.class);
@@ -119,6 +119,10 @@ public class JouleCode extends PApplet {
             exit();
         }
         println("...finished loading config.");
+        
+        // Add custom blends to engine
+        LX.registerBlend(JTestBlend.class);
+        LX.registerBlend(GemEdgeBlend.class);
 
         // Create the P3LX engine
         // Third parameter=true starts in Multi-threaded mode
@@ -132,12 +136,13 @@ public class JouleCode extends PApplet {
         // Some components, like GemEdges, want to compute normals after all
         // components are loaded.
         model.computeNormalsJoule();
-
+        
         // Fancy transitions for BM2017 were implemented using a hack.
         // This was necessary because the LX blend collections were static final.
         // In this setup there were three channels: Patterns, Transitions, and the Blender.
 
         // For development, initialize to desired pattern.
+        /*
         ((LXChannel)lx.engine.getChannel(0))
                 //.addPattern(new GemEdgeOrderAssistPattern(lx))   //Testing
                 //.addPattern(new EdgeChannelPattern(lx))          //Testing
@@ -152,6 +157,7 @@ public class JouleCode extends PApplet {
                 .addPattern(new SimpleChasePattern(lx))
                 .focusedPattern.setValue(1);
         ((LXChannel)lx.engine.getChannel(0)).goNext();
+        */
 /*
         lx.engine.audio.enabled.setValue(true);
         lx.engine.audio.meter.gain.setValue(18);
