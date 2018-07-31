@@ -1,18 +1,12 @@
 import java.util.ArrayList;
-import java.util.List;
 
 import heronarts.lx.LX;
-import heronarts.lx.blend.LXBlend;
-import heronarts.lx.color.LXColor;
 import heronarts.lx.model.LXPoint;
 
-public class GemEdgeBlend extends LXBlend {
+public class GemEdgeBlend extends JouleBlend {
 
-    protected final JouleModel model;
-        
     public GemEdgeBlend(LX lx) {
         super(lx);
-        this.model=(JouleModel)lx.model;
     }
 
     @Override

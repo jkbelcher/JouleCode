@@ -66,6 +66,10 @@ public class JouleCode extends PApplet {
         lx.registerPattern(GemEdgeColorPattern.class);
         lx.registerPattern(SolidColorJoulePattern.class);
         
+        // Add custom blends to engine
+        lx.registerBlend(JTestBlend.class);
+        lx.registerBlend(GemEdgeBlend.class);
+        
         // Cast the model to access model-specific properties from within this overridden initialize() function.
         JouleModel m = (JouleModel) model;
 
@@ -128,10 +132,6 @@ public class JouleCode extends PApplet {
         }
         println("...finished loading config.");
         
-        // Add custom blends to engine
-        LX.registerBlend(JTestBlend.class);
-        LX.registerBlend(GemEdgeBlend.class);
-
         // Create the P3LX engine
         // Third parameter=true starts in Multi-threaded mode
         lx = new LXStudio(this, model, true);
