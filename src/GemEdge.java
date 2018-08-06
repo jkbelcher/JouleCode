@@ -64,6 +64,10 @@ public class GemEdge extends LXAbstractFixtureMapped {
             return GemEdgeDirection.LEFTRIGHT;
         }
     }
+    
+    public GemEdgeDirection getDirectionRandom() {
+        return (Math.random() < 0.5) ? this.getDirectionAntiGravity() : getOppositeDirection(this.getDirectionAntiGravity());
+    }
 
     // Override this to return the points in order as they are on the physical strip
     // The key value indexes are relative to the start of the fixture. A parent fixture

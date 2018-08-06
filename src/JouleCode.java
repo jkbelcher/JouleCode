@@ -6,6 +6,7 @@ import java.util.List;
 import heronarts.lx.LX;
 import heronarts.lx.LXChannel;
 import heronarts.lx.LXPattern;
+import heronarts.lx.blend.LXBlend;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.midi.LXMidiInput;
 import heronarts.lx.output.LXDatagramOutput;
@@ -67,8 +68,22 @@ public class JouleCode extends PApplet {
         lx.registerPattern(SolidColorJoulePattern.class);
         
         // Add custom blends to engine
-        lx.registerBlend(JTestBlend.class);
-        lx.registerBlend(GemEdgeBlend.class);
+        lx.registerTransitionBlends(new Class[] {
+                EdgeWipeBlend.class,
+                GemEdgeBlend.class,
+                HorizWipeBlend.class,
+                OneGemBlend.class,
+                SphereBlend.class,
+                SmartTransitionBlend.class
+                });
+        
+        lx.registerCrossfaderBlends(new Class[] {
+                EdgeWipeBlend.class,
+                GemEdgeBlend.class,
+                HorizWipeBlend.class,
+                OneGemBlend.class,
+                SphereBlend.class,
+            });
         
         // Cast the model to access model-specific properties from within this overridden initialize() function.
         JouleModel m = (JouleModel) model;
@@ -152,6 +167,11 @@ public class JouleCode extends PApplet {
         // For development, initialize to desired pattern.
         /*
         ((LXChannel)lx.engine.getChannel(0))
+                .addPattern(new SpinnerPattern(lx))
+                .addPattern(new VUMeter(lx))
+                .focusedPattern.setValue(1);
+        ((LXChannel)lx.engine.getChannel(0)).goNext();
+        
                 //.addPattern(new GemEdgeOrderAssistPattern(lx))   //Testing
                 //.addPattern(new EdgeChannelPattern(lx))          //Testing
                 //.addPattern(new GemEdgeColorPattern(lx))         //Testing
