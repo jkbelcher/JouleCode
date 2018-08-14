@@ -63,6 +63,10 @@ public class VertRainbowShiftPattern extends JoulePattern {
                         numPixelsf = 68;
                         degreesPerPixel = (hueRange / numPixelsf);
                         hue = ((degreesPerPixel * 54.5f) + huePos) % 360;
+                    } else if (gem.params.gemType.equals("gogo")) {
+                        numPixelsf = 81;
+                        degreesPerPixel = (hueRange / numPixelsf);
+                        hue = ((degreesPerPixel * 56.5f) + huePos) % 360;
                     } else {
                         numPixelsf = 0f;
                         degreesPerPixel = 0f;

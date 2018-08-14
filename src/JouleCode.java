@@ -60,6 +60,7 @@ public class JouleCode extends PApplet {
         lx.registerPattern(BubblesPattern.class);
         lx.registerPattern(VertRainbowShiftPattern.class);
         lx.registerPattern(RisingSquaresPattern.class);
+        lx.registerPattern(AudioBridgePattern.class);
         
         // Joule Test Patterns
         lx.registerPattern(GemEdgeOrderAssistPattern.class);
@@ -83,6 +84,7 @@ public class JouleCode extends PApplet {
                 HorizWipeBlend.class,
                 OneGemBlend.class,
                 SphereBlend.class,
+                SmartXFBlend.class
             });
         
         // Cast the model to access model-specific properties from within this overridden initialize() function.
@@ -124,8 +126,6 @@ public class JouleCode extends PApplet {
         // UIWalls is from example project. Leaving in for now because
         // it prevents an error.
         ui.preview.addComponent(new UIWalls(model));
-        //ui.leftPane.engine.setVisible(true);
-
     }
 
     public void setup() {
@@ -155,65 +155,12 @@ public class JouleCode extends PApplet {
         // lx.engine.output.mode.setValue(LXOutput.Mode.RAW);
         lx.engine.isNetworkMultithreaded.setValue(true);
         lx.engine.framesPerSecond.setValue(100);
+        //lx.engine.isChannelMultithreaded.setValue(true);
 
         // Some components, like GemEdges, want to compute normals after all
         // components are loaded.
         model.computeNormalsJoule();
         
-        // Fancy transitions for BM2017 were implemented using a hack.
-        // This was necessary because the LX blend collections were static final.
-        // In this setup there were three channels: Patterns, Transitions, and the Blender.
-
-        // For development, initialize to desired pattern.
-        /*
-        ((LXChannel)lx.engine.getChannel(0))
-                .addPattern(new SpinnerPattern(lx))
-                .addPattern(new VUMeter(lx))
-                .focusedPattern.setValue(1);
-        ((LXChannel)lx.engine.getChannel(0)).goNext();
-        
-                //.addPattern(new GemEdgeOrderAssistPattern(lx))   //Testing
-                //.addPattern(new EdgeChannelPattern(lx))          //Testing
-                //.addPattern(new GemEdgeColorPattern(lx))         //Testing
-                //.addPattern(new SolidColorJoulePattern(lx))      //Testing, simple
-                .addPattern(new SpinnerPattern(lx))
-                .addPattern(new BubblesPattern(lx))
-                .addPattern(new RisingSquaresPattern(lx))
-                .addPattern(new VertRainbowShiftPattern(lx))
-                .addPattern(new VUMeter(lx))
-                .addPattern(new GemEdgePattern(lx))
-                .addPattern(new SimpleChasePattern(lx))
-                .focusedPattern.setValue(1);
-        ((LXChannel)lx.engine.getChannel(0)).goNext();
-        */
-/*
-        lx.engine.audio.enabled.setValue(true);
-        lx.engine.audio.meter.gain.setValue(18);
-
-        // ===Add fancy blending features===
-        lx.engine.getChannel(0).enabled.setValue(false);
-        lx.engine.getChannel(0).fader.setValue(0);
-
-        // Channel of patterns that are the blends
-        lx.engine.addChannel(new LXPattern[] { 
-                new EdgeWipeBlendPattern(lx), 
-                new OneGemBlendPattern(lx),
-                new HorizWipeBlendPattern(lx), 
-                new SphereBlendPattern(lx), 
-                new OneGemBlendPattern(lx) })
-                .label.setValue("FancyBlends");
-        lx.engine.getChannel(1).enabled.setValue(false);
-        lx.engine.getChannel(1).fader.setValue(0);
-
-        // Channel & Pattern that does the blending
-        BlenderPlusPattern blender = new BlenderPlusPattern(lx)
-                .setTargetChannel((LXChannel)lx.engine.getChannel(0), (LXChannel)lx.engine.getChannel(1));
-        lx.engine.addChannel(new LXPattern[] { blender })
-                .label.setValue("BlenderPlusChannel");
-        blender.initialize();
-        lx.engine.getChannel(2).fader.setValue(1);
-        lx.engine.getChannel(2).enabled.setValue(true);
-        */
     }
 
     public void draw() {

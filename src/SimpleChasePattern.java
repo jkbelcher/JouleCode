@@ -26,15 +26,15 @@ public class SimpleChasePattern extends JoulePattern {
             .setDescription("Number of foreground pixels");
 
     public final CompoundParameter hueBg = 
-            new CompoundParameter("Hue Background", LXColor.h(LXColor.GREEN), 0, 360)
-            .setDescription("Color hue of nucleus");
+            new CompoundParameter("HueB", LXColor.h(LXColor.GREEN), 0, 360)
+            .setDescription("Background Hue");
     
     public final CompoundParameter hueFg = 
-            new CompoundParameter("Hue Foreground", LXColor.h(LXColor.BLUE), 0, 360)
-            .setDescription("Color hue of nucleus");
+            new CompoundParameter("HueF", LXColor.h(LXColor.BLUE), 0, 360)
+            .setDescription("Foreground Hue");
     
     public final CompoundParameter brightnessBg = 
-            new CompoundParameter("Background brightness", 0.3, 0, 1)
+            new CompoundParameter("BriteBG", 0.3, 0, 1)
             .setDescription("Background brightness, as a percent of full");
 
     public final BooleanParameter randomize = 
@@ -58,7 +58,8 @@ public class SimpleChasePattern extends JoulePattern {
 
         this.randomize.addListener(new LXParameterListener() {
             public void onParameterChanged(LXParameter p) {
-                setRandomParameters();
+                if (randomize.getValueb())
+                    setRandomParameters();
             }
         });
     }
