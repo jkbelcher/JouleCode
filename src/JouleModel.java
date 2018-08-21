@@ -104,7 +104,21 @@ public class JouleModel extends LXModel {
 
             for (GemParameters gParams : gP.get(newCluster.params.name)) {
                 GemType gemType = gemTypeDict.get(gParams.gemType);
-                Gem newGem = new Gem(gParams, gemType, transform);
+                Gem newGem;
+                switch (gParams.gemType.toLowerCase()) {
+                case "sign":
+                    // Use sign class
+                    newGem = new SignGem(gParams, gemType, transform);
+                    break;
+                case "alpha":
+                case "beta":
+                case "charlie":
+                case "gogo":
+                default:
+                    newGem = new OriginalGem(gParams, gemType, transform);
+                    break;                        
+                }
+
                 newGem.controller = controllersDict.get(p.controllerID);
                 gems.add(newGem);
                 newCluster.AddGem(newGem);

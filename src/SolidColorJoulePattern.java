@@ -22,6 +22,12 @@ public class SolidColorJoulePattern extends JoulePattern {
     }
 
     @Override
+    public void setRandomParameters() {
+        randomizeParameter(this.hue);
+        randomizeParameter(this.brightness);
+    }
+    
+    @Override
     protected void run(double deltaMs) {
 
         this.clearColors();

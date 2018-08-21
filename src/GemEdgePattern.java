@@ -9,7 +9,7 @@ import heronarts.lx.parameter.CompoundParameter;
 public class GemEdgePattern extends JoulePattern {
 
     public final CompoundParameter flipsPerSec = 
-            new CompoundParameter("FlipPerSec", 150, 2, 300)
+            new CompoundParameter("FlipPerSec", 150, 2, 500)
             .setDescription("Gem edge color changes per second");
     public final CompoundParameter secBetweenColors = 
             new CompoundParameter("HoldTime", 2, 0, 5)
@@ -26,6 +26,12 @@ public class GemEdgePattern extends JoulePattern {
 
         this.addParameter(flipsPerSec);
         this.addParameter(secBetweenColors);
+    }
+    
+    @Override
+    public void setRandomParameters() {
+        randomizeParameter(this.flipsPerSec);
+        randomizeParameter(this.secBetweenColors);
     }
 
     void initialize() {
@@ -54,6 +60,7 @@ public class GemEdgePattern extends JoulePattern {
     }
 
     public void onActive() {
+        super.onActive();
         this.initialize();
     }
 

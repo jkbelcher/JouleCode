@@ -36,6 +36,10 @@ public class BubblesPattern extends JoulePattern {
         new EnumParameter<BubbleColorMode>("ClrMode", BubbleColorMode.RAINBOW)
         .setDescription("Color mode for new bubbles");
     
+    public final CompoundParameter hue = 
+            new CompoundParameter("Hue", LXColor.h(LXColor.GREEN), 0, 360)
+            .setDescription("Hue for solid mode");
+    
     public final BooleanParameter beat = 
             new BooleanParameter("Beat")
             .setDescription("Link beat detect to this button to release bubbles on beat.")
@@ -51,7 +55,7 @@ public class BubblesPattern extends JoulePattern {
         addParameter(minBubbleSpeed);
         addParameter(maxBubbleSpeed);
         addParameter(colorMode);
-        // addParameter(beat);
+        addParameter(hue);
 
         this.beat.addListener(new LXParameterListener() {
             public void onParameterChanged(LXParameter p) {
@@ -60,17 +64,21 @@ public class BubblesPattern extends JoulePattern {
         });
     }
 
+    @Override
     public void onActive() {
-        this.setRandomParameters();
+        super.onActive();
         this.safetyCheckParameters();
         initialize();
     }
     
+    @Override
     public void setRandomParameters() {
         randomizeParameter(this.density);
         randomizeParameter(this.minBubbleSpeed);
+        this.minBubbleSpeed.setValue(this.minBubbleSpeed.getValue() / 2);
         randomizeParameter(this.maxBubbleSpeed, this.minBubbleSpeed.getValue(), this.maxBubbleSpeed.range.max);
         randomizeParameter(this.colorMode);
+        randomizeParameter(this.hue);
     }
     
     void safetyCheckParameters() {
@@ -78,18 +86,14 @@ public class BubblesPattern extends JoulePattern {
             this.maxBubbleSpeed.setValue(this.minBubbleSpeed.getValue() + 5);
         }
     }
-    
-    int bubbleColorSolid;
 
     private void initialize() {
         this.edges = new ArrayList<EdgeBubbleCollection>();
 
         float density = this.density.getValuef();
         
-        bubbleColorSolid = getRandomColor();
-
         for (Gem gem : this.model.gems) {
-            for (GemEdge gme : gem.gravityMappedEdges) {
+            for (GemEdge gme : gem.continuousEdges) {
                 EdgeBubbleCollection c = new EdgeBubbleCollection();
                 c.edge = gme;
                 c.edgeDirection = gme.getDirectionRandom();
@@ -110,7 +114,9 @@ public class BubblesPattern extends JoulePattern {
         
         switch (this.colorMode.getEnum()) {
             case RAINBOW: b.color = getRandomColor(); break;
-            case SOLID: b.color = this.bubbleColorSolid; break;
+            case SOLID:
+                b.color = LXColor.hsb(this.hue.getValuef(), 100, 100); 
+                break;
         };
         
         b.pos = 0;
@@ -136,6 +142,9 @@ public class BubblesPattern extends JoulePattern {
     @Override
     protected void run(double deltaMs) {
         this.clearColors();
+        
+        int solidColor = LXColor.hsb(this.hue.getValuef(), 100, 100);
+        BubbleColorMode colorMode = this.colorMode.getEnum();
 
         // Foreach bubble: shift position if it's time. Create new bubble if it's beyond max position.
         for (EdgeBubbleCollection ebc : this.edges) {
@@ -170,7 +179,14 @@ public class BubblesPattern extends JoulePattern {
             
             // Render every bubble
             for (Bubble bubble : ebc.bubbles) {
-                colors[ebc.edge.getPoint(bubble.pos, ebc.edgeDirection).index] = bubble.color;
+                switch (colorMode) {
+                case SOLID:
+                    colors[ebc.edge.getPoint(bubble.pos, ebc.edgeDirection).index] = solidColor;
+                    break;
+                default:
+                    colors[ebc.edge.getPoint(bubble.pos, ebc.edgeDirection).index] = bubble.color;
+                    break;
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ public class SmartTransitionBlend extends JouleBlend {
     private final List<LXBlend> blends = new ArrayList<LXBlend>();
     private int iActiveBlend = -1;
     private LXBlend activeBlend;
-    public Boolean isRandom = false;
+    public Boolean isRandom = true;
     
     public SmartTransitionBlend(LX lx) {
         super(lx);
@@ -19,15 +19,10 @@ public class SmartTransitionBlend extends JouleBlend {
                 new HorizWipeBlend(lx),
                 new GemEdgeBlend(lx),
                 new SphereBlend(lx),
-                new OneGemBlend(lx)
+                new OneGemBlend(lx),
+                new CarouselBlend(lx)
                 });
-        /*
-        this.addBlends(new LXBlend[]{
-                new HorizWipeBlend(lx),
-                new DissolveBlend(lx),
-                new GemEdgeBlend(lx)                
-                });
-                */
+                //new DissolveBlend(lx),
     }
     
     @Override
@@ -100,8 +95,8 @@ public class SmartTransitionBlend extends JouleBlend {
     }
 
     @Override
-    public void blend(int[] dst, int[] src, double alpha, int[] output) {
-        activeBlend.blend(dst, src, alpha, output);
+    public void lerp(int[] dst, int[] src, double amt, int[] output) {
+        activeBlend.lerp(dst, src, amt, output);
     }
 
 }

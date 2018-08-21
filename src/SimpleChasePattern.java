@@ -37,11 +37,6 @@ public class SimpleChasePattern extends JoulePattern {
             new CompoundParameter("BriteBG", 0.3, 0, 1)
             .setDescription("Background brightness, as a percent of full");
 
-    public final BooleanParameter randomize = 
-            new BooleanParameter("Randomize")
-            .setDescription("Randomize the parameters")
-            .setMode(Mode.MOMENTARY);
-
     private int pos = 0;
     double nextMoveTime;
 
@@ -54,7 +49,6 @@ public class SimpleChasePattern extends JoulePattern {
         addParameter(hueBg);
         addParameter(hueFg);
         addParameter(brightnessBg);
-        addParameter(randomize);
 
         this.randomize.addListener(new LXParameterListener() {
             public void onParameterChanged(LXParameter p) {
@@ -64,18 +58,20 @@ public class SimpleChasePattern extends JoulePattern {
         });
     }
 
+    @Override
     public void setRandomParameters() {
         randomizeParameter(this.pixelMovesPerSec);
         randomizeParameter(this.totalPixelLength);
         randomizeParameter(this.countFgPixels);
         randomizeParameter(this.hueBg);
         randomizeParameter(this.hueFg);
+        randomizeParameter(this.brightnessBg);
         this.pos = 0;
     }
 
     public void onActive() {
-        this.setRandomParameters();
         this.nextMoveTime = this.runMs + (TICKS_PER_SEC / this.pixelMovesPerSec.getValuef());
+        super.onActive();
     }
 
     @Override

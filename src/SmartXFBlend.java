@@ -2,27 +2,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.blend.AddBlend;
 import heronarts.lx.blend.LXBlend;
 import heronarts.lx.parameter.CompoundParameter;
 
 public class SmartXFBlend extends JouleBlend {
 
-    public final CompoundParameter secsToChange = new CompoundParameter("SecsToChange", 2, 0, 30)
+    public final CompoundParameter secsToChange = new CompoundParameter("SecsToChange", 2, 0, 15)
             .setDescription("Number of seconds for the crossfader to be all the way on one side before a new blend is chosen.");
 
     private final List<LXBlend> blends = new ArrayList<LXBlend>();
     private int iActiveBlend = -1;
-    private LXBlend activeBlend;
-    public Boolean isRandom = false;
+    private LXBlend activeBlend = null;
+    public Boolean isRandom = true;
     
     public SmartXFBlend(LX lx) {
         super(lx);
+        
+        addParameter(secsToChange);
 
         this.addBlends(new LXBlend[]{
+                new AddBlend(lx),
                 new HorizWipeBlend(lx),
                 new GemEdgeBlend(lx),
                 new SphereBlend(lx),
-                new OneGemBlend(lx)
+                new OneGemBlend(lx),
+                new SphereBlend(lx),
+                new CarouselBlend(lx)
                 });
         
         this.lastRunTime = System.currentTimeMillis() - 5;
@@ -57,6 +63,7 @@ public class SmartXFBlend extends JouleBlend {
             throw new IllegalStateException("SmartXFBlend must have child blends in order to run.");
             
         nextBlend();
+        System.out.println("Activated SmartXFBlend");        
     }
     
     @Override
@@ -98,25 +105,27 @@ public class SmartXFBlend extends JouleBlend {
     }
     
     long lastRunTime;
+    double lastAmt = 0;
     
-    public boolean isTimeToChangeBlends() {
+    public boolean isTimeToChangeBlends(double amt) {
+        //Calculate elapsed time
         long millisToChange = (long) (this.secsToChange.getValue() * 1000);
         long currentTime = System.currentTimeMillis();
-        boolean isTimeToChange = (currentTime - this.lastRunTime) > millisToChange;
-        
+        boolean isTimeElapsed = (currentTime - this.lastRunTime) > millisToChange;        
         this.lastRunTime = currentTime;
         
-        if (isTimeToChange)
-            System.out.println("Time to change!");
-        return isTimeToChange;                
+        boolean isEdgeOfBlend = lastAmt < .02 || .98 < lastAmt;
+        lastAmt = amt;
+        
+        return isTimeElapsed && isEdgeOfBlend;                
     }
-
+    
     @Override
-    public void blend(int[] dst, int[] src, double alpha, int[] output) {
-        if (this.isTimeToChangeBlends())
+    public void lerp(int[] dst, int[] src, double amt, int[] output) {
+        if (isTimeToChangeBlends(amt)) {
             nextBlend();
-            
-        activeBlend.blend(dst, src, alpha, output);
+        }
+        activeBlend.lerp(dst, src, amt, output);
     }
 
 }

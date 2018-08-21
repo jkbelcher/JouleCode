@@ -10,7 +10,7 @@ public class VertRainbowShiftPattern extends JoulePattern {
             new CompoundParameter("hueRange", 128, 5, 400).setDescription("hueRange");
     
     public final CompoundParameter speed = 
-            new CompoundParameter("Speed", .14, .001, 1.0)
+            new CompoundParameter("Speed", .14, .03, 0.5)
             .setDescription("Speed in full range shifts per second");
 
     float huePos = 0;
@@ -22,6 +22,12 @@ public class VertRainbowShiftPattern extends JoulePattern {
         addParameter(speed);
     }
 
+    @Override
+    public void setRandomParameters() {
+        randomizeParameter(this.hueRange);
+        randomizeParameter(this.speed);
+    }
+    
     @Override
     protected void run(double deltaMs) {
 
@@ -35,49 +41,9 @@ public class VertRainbowShiftPattern extends JoulePattern {
         huePos %= 360;
 
         for (Gem gem : this.model.gems) {
-            for (GemEdge edge : gem.gravityMappedEdges) {
-                if (edge.directionMapped == GemEdgeDirection.DOWNUP) {
-                    int numPixels = edge.getNumPoints();
-                    float numPixelsf = (float) numPixels;
-                    float degreesPerPixel = (hueRange / numPixelsf);
-
-                    for (int i = 0; i < numPixels; i++) {
-                        float hue = ((degreesPerPixel * ((float) i)) + huePos) % 360;
-                        colors[edge.getPoint(i, edge.getDirectionAntiGravity()).index] = LXColor.hsb(hue, 100, 100);
-                    }
-                } else {
-                    // **Note: should pre-load these values and not calculate them each frame.
-                    float numPixelsf;
-                    float degreesPerPixel;
-                    float hue;
-
-                    if (gem.params.gemType.equals("alpha")) {
-                        numPixelsf = 27;
-                        degreesPerPixel = (hueRange / numPixelsf);
-                        hue = ((degreesPerPixel * 21.5f) + huePos) % 360;
-                    } else if (gem.params.gemType.equals("bravo")) {
-                        numPixelsf = 18;
-                        degreesPerPixel = (hueRange / numPixelsf);
-                        hue = ((degreesPerPixel * 15.5f) + huePos) % 360;
-                    } else if (gem.params.gemType.equals("charlie")) {
-                        numPixelsf = 68;
-                        degreesPerPixel = (hueRange / numPixelsf);
-                        hue = ((degreesPerPixel * 54.5f) + huePos) % 360;
-                    } else if (gem.params.gemType.equals("gogo")) {
-                        numPixelsf = 81;
-                        degreesPerPixel = (hueRange / numPixelsf);
-                        hue = ((degreesPerPixel * 56.5f) + huePos) % 360;
-                    } else {
-                        numPixelsf = 0f;
-                        degreesPerPixel = 0f;
-                        hue = 0f;
-                    }
-
-                    int numPixels = edge.getNumPoints();
-                    for (int i = 0; i < numPixels; i++) {
-                        colors[edge.getPoint(i, edge.getDirectionAntiGravity()).index] = LXColor.hsb(hue, 100, 100);
-                    }
-                }
+            for (NormalizedPoint np : gem.getPointsNormalized()) {
+                float hue = ((np.yn * hueRange) - huePos) % 360;
+                colors[np.p.index] = LXColor.hsb(hue, 100, 100);                
             }
         }
     }

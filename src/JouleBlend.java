@@ -15,10 +15,11 @@ public abstract class JouleBlend extends LXBlend {
     @Override
     public void lerp(int[] from, int[] to, double amt, int[] output) {
         // Overridden to prevent accidental infinite recursion
+        // Joule blends should override this
     }
     
     @Override
-    public void blend(int[] dst, int[] src, double alpha, int[] output) {
+    public final void blend(int[] dst, int[] src, double alpha, int[] output) {
         // Prioritize lerp for Joule,
         // assuming custom blends are mainly asymmetrical.
         this.lerp(dst, src, alpha / 2.0, output);

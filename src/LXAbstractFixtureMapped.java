@@ -2,6 +2,7 @@ import java.util.AbstractMap;
 import java.util.TreeMap;
 
 import heronarts.lx.model.LXAbstractFixture;
+import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
 
 // This provides a layer of abstraction between fixtures and outputs.

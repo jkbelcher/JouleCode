@@ -68,6 +68,15 @@ public class JouleCode extends PApplet {
         lx.registerPattern(GemEdgeColorPattern.class);
         lx.registerPattern(SolidColorJoulePattern.class);
         
+        lx.registerChannelBlends(new Class[] {
+                LowerZoneBlend.class,
+                MiddleZoneBlend.class,
+                UpperZoneBlend.class,
+                CharlieZoneBlend.class,
+                GoGoZoneBlend.class,
+                SignZoneBlend.class                
+            });
+        
         // Add custom blends to engine
         lx.registerTransitionBlends(new Class[] {
                 EdgeWipeBlend.class,
@@ -75,6 +84,7 @@ public class JouleCode extends PApplet {
                 HorizWipeBlend.class,
                 OneGemBlend.class,
                 SphereBlend.class,
+                CarouselBlend.class,
                 SmartTransitionBlend.class
                 });
         
@@ -84,7 +94,8 @@ public class JouleCode extends PApplet {
                 HorizWipeBlend.class,
                 OneGemBlend.class,
                 SphereBlend.class,
-                SmartXFBlend.class
+                CarouselBlend.class,
+                SmartXFBlend.class,
             });
         
         // Cast the model to access model-specific properties from within this overridden initialize() function.

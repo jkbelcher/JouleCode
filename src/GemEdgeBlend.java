@@ -33,26 +33,7 @@ public class GemEdgeBlend extends JouleBlend {
             }
         }
     }
-    
-    @Override
-    public void blend(int[] dst, int[] src, double alpha, int[] output) {
-        double alphaHalf = alpha / 2.;
-        for (GemEdgeTime edge : this.edges) {
-            if (alphaHalf > edge.timing)
-            {
-                for (LXPoint p : edge.edge.getPoints()) {
-                    output[p.index] = src[p.index];
-                }
-            }
-            else
-            {
-                for (LXPoint p : edge.edge.getPoints()) {
-                    output[p.index] = dst[p.index];
-                }
-            }
-        }
-    }
-    
+
     void initialize() {
         ArrayList<GemEdgeTime> edgesToSetup = new ArrayList<GemEdgeTime>();
 

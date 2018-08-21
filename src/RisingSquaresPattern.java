@@ -24,11 +24,11 @@ public class RisingSquaresPattern extends JoulePattern {
             .setDescription("Variance in sizes");
     
     public final CompoundParameter minSpeed = 
-            new CompoundParameter("MinSpeed", .1, .01, 2)
+            new CompoundParameter("MinSpeed", .1, .01, 1)
             .setDescription("Minimum speed in normal ranges per second");
     
     public final CompoundParameter maxSpeed = 
-            new CompoundParameter("MaxSpeed", 1, .05, 5)
+            new CompoundParameter("MaxSpeed", 1, .05, 1.5)
             .setDescription("Maximum speed in normal ranges per second");
     
     private List<Square> squares;
@@ -45,6 +45,7 @@ public class RisingSquaresPattern extends JoulePattern {
         //this.autoRandom.setValue(false);
     }
 
+    @Override
     public void setRandomParameters() {
         randomizeParameter(this.numSquares);
         randomizeParameter(this.avgSize);
@@ -55,7 +56,7 @@ public class RisingSquaresPattern extends JoulePattern {
     
     public void onActive() {
         initialize();
-        this.setRandomParameters();
+        super.onActive();
     }
 
     private void initialize() {        
