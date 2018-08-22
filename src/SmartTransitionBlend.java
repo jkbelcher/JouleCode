@@ -20,7 +20,8 @@ public class SmartTransitionBlend extends JouleBlend {
                 new GemEdgeBlend(lx),
                 new SphereBlend(lx),
                 new OneGemBlend(lx),
-                new CarouselBlend(lx)
+                new CarouselBlend(lx),
+                new OneThingBlend(lx)
                 });
                 //new DissolveBlend(lx),
     }

@@ -68,6 +68,8 @@ public class JouleCode extends PApplet {
         lx.registerPattern(GemEdgeColorPattern.class);
         lx.registerPattern(SolidColorJoulePattern.class);
         
+
+        // Add custom blends to engine
         lx.registerChannelBlends(new Class[] {
                 LowerZoneBlend.class,
                 MiddleZoneBlend.class,
@@ -77,7 +79,6 @@ public class JouleCode extends PApplet {
                 SignZoneBlend.class                
             });
         
-        // Add custom blends to engine
         lx.registerTransitionBlends(new Class[] {
                 EdgeWipeBlend.class,
                 GemEdgeBlend.class,
@@ -85,6 +86,7 @@ public class JouleCode extends PApplet {
                 OneGemBlend.class,
                 SphereBlend.class,
                 CarouselBlend.class,
+                OneThingBlend.class,
                 SmartTransitionBlend.class
                 });
         
@@ -95,6 +97,7 @@ public class JouleCode extends PApplet {
                 OneGemBlend.class,
                 SphereBlend.class,
                 CarouselBlend.class,
+                OneThingBlend.class,
                 SmartXFBlend.class,
             });
         

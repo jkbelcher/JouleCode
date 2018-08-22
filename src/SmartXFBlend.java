@@ -28,7 +28,8 @@ public class SmartXFBlend extends JouleBlend {
                 new SphereBlend(lx),
                 new OneGemBlend(lx),
                 new SphereBlend(lx),
-                new CarouselBlend(lx)
+                new CarouselBlend(lx),
+                new OneThingBlend(lx)
                 });
         
         this.lastRunTime = System.currentTimeMillis() - 5;

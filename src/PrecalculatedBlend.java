@@ -19,6 +19,7 @@ public abstract class PrecalculatedBlend extends JouleBlend {
     
     @Override
     public void onActive() {
+        super.onActive();
         this.initialize();
     }
     

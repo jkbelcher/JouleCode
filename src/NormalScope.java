@@ -1,6 +1,7 @@
 import java.util.List;
 
 import heronarts.lx.model.LXAbstractFixture;
+import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
 import heronarts.lx.model.LXPoint;
 
@@ -96,7 +97,7 @@ public class NormalScope {
      */
     public float rRange;
 
-    public NormalScope(LXAbstractFixture target) {
+    public NormalScope(LXFixture target) {
         average(target);
     }
     
@@ -109,7 +110,7 @@ public class NormalScope {
      *
      * @return this
      */
-    public NormalScope average(LXAbstractFixture target) {
+    public NormalScope average(LXFixture target) {
       float ax = 0, ay = 0, az = 0;
       float xMin = 0, xMax = 0, yMin = 0, yMax = 0, zMin = 0, zMax = 0, rMin = 0, rMax = 0;
 

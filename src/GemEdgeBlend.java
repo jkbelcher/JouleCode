@@ -12,8 +12,9 @@ public class GemEdgeBlend extends JouleBlend {
     }
 
     @Override
-    public void onActive() {
-        this.initialize();
+    public void setRandomParameters() {
+        this.initializeGemEdge();
+        super.setRandomParameters();
     }
     
     @Override
@@ -34,7 +35,7 @@ public class GemEdgeBlend extends JouleBlend {
         }
     }
 
-    void initialize() {
+    void initializeGemEdge() {
         ArrayList<GemEdgeTime> edgesToSetup = new ArrayList<GemEdgeTime>();
 
         for (Cluster cluster : this.model.clusters) {

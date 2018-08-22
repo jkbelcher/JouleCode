@@ -73,6 +73,7 @@ public class CarouselBlend extends FixedFadeBlend {
                 new CarouselOrder("EU.1", 3),
                 new CarouselOrder("EU.1", 4),
                 new CarouselOrder("EU.1", 5),
+                new CarouselOrder("Sign", 1),
                 new CarouselOrder("EU.2", 1),
                 new CarouselOrder("EU.2", 2),
                 new CarouselOrder("EU.3", 1),

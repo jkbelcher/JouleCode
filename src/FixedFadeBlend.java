@@ -14,10 +14,9 @@ public abstract class FixedFadeBlend extends PrecalculatedBlend {
     }
 
     @Override
-    public void onActive() {
-        randomizeParameter(this.fade);
-        
-        super.onActive();
+    public void setRandomParameters() {
+        randomizeParameter(this.fade);        
+        super.setRandomParameters();
     }
 
     protected PointTransition buildFixedFadePointTransition(LXPoint p, double amt, double lenAmt) {

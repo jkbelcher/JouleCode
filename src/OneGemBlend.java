@@ -16,12 +16,11 @@ public class OneGemBlend extends PrecalculatedBlend {
 
         addParameter(gemLen);
     }
-
+    
     @Override
-    public void onActive() {
-        randomizeParameter(this.gemLen);
-        
-        super.onActive();
+    public void setRandomParameters() {
+        randomizeParameter(this.gemLen);        
+        super.setRandomParameters();
     }
 
     @Override

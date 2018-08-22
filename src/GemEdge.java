@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 import heronarts.lx.model.LXPoint;
 
-public class GemEdge extends LXAbstractFixtureMapped {
+public class GemEdge extends LXAbstractFixtureMapped implements INormalizedScope {
 
     public final int id;
     public float x;
@@ -93,6 +93,8 @@ public class GemEdge extends LXAbstractFixtureMapped {
         this.xn = midPoint.xn;
         this.yn = midPoint.yn;
         this.zn = midPoint.zn;
+        
+        this.computeNormalized();
     }
 
     public static GemEdgeDirection getOppositeDirection(GemEdgeDirection direction) {
@@ -111,4 +113,34 @@ public class GemEdge extends LXAbstractFixtureMapped {
         return direction;
     }
 
+    // INormalizedScope
+    
+    NormalScope normalScope = null;
+    
+    protected final List<NormalizedPoint> normalizedPoints = new ArrayList<NormalizedPoint>();
+    
+    protected void computeNormalized() {
+        this.normalScope = new NormalScope(this);        
+        for (LXPoint p : this.getPoints()) {
+            this.normalizedPoints.add(new NormalizedPoint(p, this.normalScope));
+        }
+    }
+    
+    public NormalScope getNormalScope() {
+        return this.normalScope;
+    }
+    
+    public List<NormalizedPoint> getPointsNormalized() {
+        return this.normalizedPoints;
+    }
+    
+    public int countChildScopes() {
+        return 0;
+    }
+    
+    public List<INormalizedScope> getChildScope(int index) {
+        throw new IllegalArgumentException("An invalid child scope was requested: " + this.getClass() + " " + index);                
+    }
+    
+    // end INormalizedScope  
 }

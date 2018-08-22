@@ -8,7 +8,7 @@ import heronarts.lx.model.LXPoint;
 import heronarts.lx.transform.LXTransform;
 import processing.core.PApplet;
 
-public abstract class Gem extends LXAbstractFixtureMapped implements INormalized {
+public abstract class Gem extends LXAbstractFixtureMapped implements INormalizedScope {
 
     public class GemEdgeDirectionPair {
         GemEdgeDirection fromEdgeDirection;
@@ -27,7 +27,7 @@ public abstract class Gem extends LXAbstractFixtureMapped implements INormalized
     public BeagleboneController controller;
 
     public final List<GemEdge> gravityMappedEdges; // Represents full vertical edges, and one edges for the horizontals all the way around
-    public final List<GemEdge> continuousEdges; // Represents full vertical edges, and one edges for the horizontals all the way around
+    public final List<GemEdge> continuousEdges; // Continuous edges that can be used by a pattern.
 
     protected abstract LXTransform AdjustTransformForEdge(LXTransform transform, int edgePosition);
 
@@ -215,7 +215,7 @@ public abstract class Gem extends LXAbstractFixtureMapped implements INormalized
         this.computeNormalized();
     }
 
-    // Normalized
+    // INormalizedScope
     
     NormalScope normalScope = null;
     
@@ -236,9 +236,22 @@ public abstract class Gem extends LXAbstractFixtureMapped implements INormalized
         return this.normalizedPoints;
     }
     
-    public boolean hasChildScopes() {
-        return false;
-    }       
+    public int countChildScopes() {
+        return 2;
+    }
+    
+    public List<INormalizedScope> getChildScope(int index) {
+        switch (index) {
+        case 0:
+            return new ArrayList<INormalizedScope>(this.continuousEdges);
+        case 1:
+            return new ArrayList<INormalizedScope>(this.edges);
+        default:
+            throw new IllegalArgumentException("An invalid child scope was requested: " + this.getClass() + " " + index);                
+        }
+    }
+    
+    // end INormalizedScope   
 
     
     public class GMSet {

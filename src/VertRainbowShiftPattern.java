@@ -25,7 +25,7 @@ public class VertRainbowShiftPattern extends JoulePattern {
     @Override
     public void setRandomParameters() {
         randomizeParameter(this.hueRange);
-        randomizeParameter(this.speed);
+        randomizeParameter(this.speed, this.speed.range.min, 0.25);
     }
     
     @Override

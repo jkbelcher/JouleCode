@@ -18,13 +18,14 @@ import org.supercsv.io.CsvMapReader;
 
 import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
+import heronarts.lx.model.LXPoint;
 import heronarts.lx.transform.LXTransform;
 
 /**
  * This model represents the entire Joule art car.
  * It contains lists of the logical lighted components on the car.
  */
-public class JouleModel extends LXModel {
+public class JouleModel extends LXModel implements INormalizedScope {
 
     // For CSV files:
     static public final String subSeparator = ";";
@@ -33,6 +34,8 @@ public class JouleModel extends LXModel {
     public final List<Cluster> clusters;
     public final List<GemType> gemTypes;
     public final List<Gem> gems;
+    public final List<GemEdge> edges = new ArrayList<GemEdge>();
+    public final List<GemEdge> continuousEdges = new ArrayList<GemEdge>();
 
     public Boolean isInitialized = false;
 
@@ -44,12 +47,22 @@ public class JouleModel extends LXModel {
         this.clusters = clusters;
         this.gemTypes = gemTypes;
         this.gems = gems;
+
+        // For convenience, keep a list of edges at this level
+        for (Gem gem : this.gems) {
+            this.edges.addAll(gem.edges);
+            this.continuousEdges.addAll(gem.edges);
+        }
     }
 
     public void computeNormalsJoule() {
+        for (Cluster cluster : this.clusters) {
+            cluster.computeNormalized();
+        }
         for (Gem gem : this.gems) {
             gem.computeNormalsJoule();
         }
+        this.computeNormalized();   // This is duplicating effort to do it at the model level, but it's Wednesday before BM and we need to get this thing running!
     }
 
     public static JouleModel LoadConfigurationFromFile() throws Exception {
@@ -322,5 +335,47 @@ public class JouleModel extends LXModel {
 
         return results;
     }
+    
+    // INormalizedScope
+    
+    NormalScope normalScope = null;
+    
+    protected final List<NormalizedPoint> normalizedPoints = new ArrayList<NormalizedPoint>();
+    
+    protected void computeNormalized() {
+        this.normalScope = new NormalScope(this);        
+        for (LXPoint p : this.getPoints()) {
+            this.normalizedPoints.add(new NormalizedPoint(p, this.normalScope));
+        }
+    }
+    
+    public NormalScope getNormalScope() {
+        return this.normalScope;
+    }
+    
+    public List<NormalizedPoint> getPointsNormalized() {
+        return this.normalizedPoints;
+    }
+    
+    public int countChildScopes() {
+        return 4;
+    }
+    
+    public List<INormalizedScope> getChildScope(int index) {
+        switch (index) {
+        case 0:
+            return new ArrayList<INormalizedScope>(this.continuousEdges);
+        case 1:
+            return new ArrayList<INormalizedScope>(this.edges);
+        case 2:
+            return new ArrayList<INormalizedScope>(this.gems);
+        case 3:
+            return new ArrayList<INormalizedScope>(this.clusters);
+        default:
+            throw new IllegalArgumentException("An invalid child scope was requested: " + this.getClass() + " " + index);                
+        }
+    }
+    
+    // end INormalizedScope
 
 }
