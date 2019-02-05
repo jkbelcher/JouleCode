@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXChannel;
 import heronarts.lx.blend.DissolveBlend;
 import heronarts.lx.blend.LXBlend;
 
@@ -16,14 +17,17 @@ public class SmartTransitionBlend extends JouleBlend {
         super(lx);
         
         this.addBlends(new LXBlend[]{
+                new DissolveBlend(lx),
                 new HorizWipeBlend(lx),
                 new GemEdgeBlend(lx),
                 new SphereBlend(lx),
                 new OneGemBlend(lx),
                 new CarouselBlend(lx),
-                new OneThingBlend(lx)
+                new OneThingBlend(lx),
+                new OneThingBlend(lx),
+                new OneThingBlend(lx),
+                new ClockBlend(lx)
                 });
-                //new DissolveBlend(lx),
     }
     
     @Override
@@ -59,7 +63,11 @@ public class SmartTransitionBlend extends JouleBlend {
     
     @Override
     public void onInactive() {
-        // We inactivate the blend right before activating a new one        
+        // We inactivate the blend right before activating a new one
+
+        // Randomize the transition time
+        System.out.println(this.getParent() + " " + this.getParent().getCanonicalPath());
+        randomizeParameter(((LXChannel)this.getParent()).transitionTimeSecs, 5, 15);        
     }
     
     protected void nextBlend() {

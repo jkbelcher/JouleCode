@@ -68,6 +68,9 @@ public class JouleCode extends PApplet {
         lx.registerPattern(GemEdgeColorPattern.class);
         lx.registerPattern(SolidColorJoulePattern.class);
         
+        // Joule Effects
+        lx.registerEffect(RGBEffect.class);
+        
 
         // Add custom blends to engine
         lx.registerChannelBlends(new Class[] {
@@ -76,7 +79,8 @@ public class JouleCode extends PApplet {
                 UpperZoneBlend.class,
                 CharlieZoneBlend.class,
                 GoGoZoneBlend.class,
-                SignZoneBlend.class                
+                SignZoneBlend.class,
+                NoneBlend.class
             });
         
         lx.registerTransitionBlends(new Class[] {
@@ -87,6 +91,7 @@ public class JouleCode extends PApplet {
                 SphereBlend.class,
                 CarouselBlend.class,
                 OneThingBlend.class,
+                ClockBlend.class,
                 SmartTransitionBlend.class
                 });
         
@@ -123,7 +128,7 @@ public class JouleCode extends PApplet {
                 output.addDatagram(dg);
             }
 
-            //lx.addOutput(output); // Comment out for dev
+            lx.addOutput(output); // Comment out for dev
 
         } catch (UnknownHostException e) {
             println("Unknown Host Exception while constructing UDP output: " + e);

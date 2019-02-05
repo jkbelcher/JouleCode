@@ -3,12 +3,13 @@ import java.util.List;
 
 import heronarts.lx.LX;
 import heronarts.lx.blend.AddBlend;
+import heronarts.lx.blend.DissolveBlend;
 import heronarts.lx.blend.LXBlend;
 import heronarts.lx.parameter.CompoundParameter;
 
 public class SmartXFBlend extends JouleBlend {
 
-    public final CompoundParameter secsToChange = new CompoundParameter("SecsToChange", 2, 0, 15)
+    public final CompoundParameter secsToChange = new CompoundParameter("SecsToChange", 0.5, 0, 15)
             .setDescription("Number of seconds for the crossfader to be all the way on one side before a new blend is chosen.");
 
     private final List<LXBlend> blends = new ArrayList<LXBlend>();
@@ -23,12 +24,14 @@ public class SmartXFBlend extends JouleBlend {
 
         this.addBlends(new LXBlend[]{
                 new AddBlend(lx),
+                new DissolveBlend(lx),
                 new HorizWipeBlend(lx),
-                new GemEdgeBlend(lx),
+//                new GemEdgeBlend(lx),
                 new SphereBlend(lx),
-                new OneGemBlend(lx),
-                new SphereBlend(lx),
+                new ClockBlend(lx),
                 new CarouselBlend(lx),
+                new OneThingBlend(lx),
+                new OneThingBlend(lx),
                 new OneThingBlend(lx)
                 });
         
@@ -64,7 +67,6 @@ public class SmartXFBlend extends JouleBlend {
             throw new IllegalStateException("SmartXFBlend must have child blends in order to run.");
             
         nextBlend();
-        System.out.println("Activated SmartXFBlend");        
     }
     
     @Override

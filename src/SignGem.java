@@ -216,27 +216,8 @@ public class SignGem extends Gem {
     @Override
     public AbstractMap<Integer, LXPoint> getPointsMapped() {
         final TreeMap<Integer, LXPoint> mappedPoints = new TreeMap<Integer, LXPoint>();
-        if (this.params.gemType.equalsIgnoreCase("charlie")) {
-            // Charlie gems are special because they take two channels.
-            int i = 0;
-            for (int iEdgeOrder = 0; iEdgeOrder < 6; iEdgeOrder++) {
-                int edgePosition = this.params.edgeOrder[iEdgeOrder];
-                for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
-                        .entrySet()) {
-                    mappedPoints.put(i++, entry.getValue());
-                }
-            }
-            // Second half of charlie gem is on the next channel.
-            i = this.controller.params.LEDsPerChannel;
-            for (int iEdgeOrder = 6; iEdgeOrder < 12; iEdgeOrder++) {
-                int edgePosition = this.params.edgeOrder[iEdgeOrder];
-                for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
-                        .entrySet()) {
-                    mappedPoints.put(i++, entry.getValue());
-                }
-            }
-        } else if (this.params.gemType.equalsIgnoreCase("gogo")) {
-            // GoGo gems are special because they take 4 channels.
+        if (this.params.gemType.equalsIgnoreCase("sign")) {
+            // Sign is special because it takes 3 channels.
             // First channel
             int i = 0;
             for (int iEdgeOrder = 0; iEdgeOrder < 3; iEdgeOrder++) {
@@ -258,15 +239,6 @@ public class SignGem extends Gem {
             // Third channel
             i = this.controller.params.LEDsPerChannel * 2;
             for (int iEdgeOrder = 6; iEdgeOrder < 9; iEdgeOrder++) {
-                int edgePosition = this.params.edgeOrder[iEdgeOrder];
-                for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
-                        .entrySet()) {
-                    mappedPoints.put(i++, entry.getValue());
-                }
-            }
-            // Fourth channel
-            i = this.controller.params.LEDsPerChannel * 3;
-            for (int iEdgeOrder = 9; iEdgeOrder < 12; iEdgeOrder++) {
                 int edgePosition = this.params.edgeOrder[iEdgeOrder];
                 for (Map.Entry<Integer, LXPoint> entry : this.edgesByPosition.get(edgePosition).getPointsMapped()
                         .entrySet()) {

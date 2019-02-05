@@ -1,5 +1,6 @@
 import heronarts.lx.LX;
 import heronarts.lx.blend.LXBlend;
+import heronarts.lx.parameter.BooleanParameter;
 import heronarts.lx.parameter.BoundedParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 
@@ -30,4 +31,10 @@ public abstract class RandomizableLXBlend extends LXBlend {
         int newValue = (int) (Math.random() * ((float)(parameter.getRange()))+parameter.getMinValue());
         parameter.setValue(newValue);
     }
+
+    public static void randomizeParameter(BooleanParameter parameter) {
+        boolean newValue = Math.random() >= 0.5 ? true : false;
+        parameter.setValue(newValue);
+    }
+
 }

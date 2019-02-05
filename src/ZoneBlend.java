@@ -16,7 +16,8 @@ public class ZoneBlend extends JouleBlend {
         Upper,
         Charlie,
         GoGo,
-        Sign
+        Sign,
+        SignWords
       }
 
     @SuppressWarnings("unchecked")

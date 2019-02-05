@@ -74,7 +74,7 @@ public class AudioBridgePattern extends JoulePattern {
         case 3: return eqRange.getNormalized(low3.getValue()); 
         case 4: return eqRange.getNormalized(low4.getValue()); default: return 0; } }
     };
-
+    
     public final BoundedFunctionalParameter midA = new BoundedFunctionalParameter("MidA") {
         public double computeValue() { switch (aChannel.getValuei()) { 
         case 1: return eqRange.getNormalized(mid1.getValue());
@@ -142,6 +142,9 @@ public class AudioBridgePattern extends JoulePattern {
     public final FunctionalParameter LowBNet = new FunctionalParameter("LowBNet") {
         public double getValue() { return lowB.getValue() * fadeB.getValue(); }
     };
+    public final BoundedFunctionalParameter LowNet = new BoundedFunctionalParameter("LowNet") {
+        public double computeValue() {return Math.max(lowA.getValue() * fadeA.getValue(), lowB.getValue() * fadeB.getValue()); }
+    };
 
     public final FunctionalParameter MidANet = new FunctionalParameter("MidANet") {
         public double getValue() { return midA.getValue() * fadeA.getValue(); }
@@ -149,12 +152,18 @@ public class AudioBridgePattern extends JoulePattern {
     public final FunctionalParameter MidBNet = new FunctionalParameter("MidBNet") {
         public double getValue() { return midB.getValue() * fadeB.getValue(); }
     };
+    public final BoundedFunctionalParameter MidNet = new BoundedFunctionalParameter("MidNet") {
+        public double computeValue() {return Math.max(midA.getValue() * fadeA.getValue(), midB.getValue() * fadeB.getValue()); }
+    };
 
     public final FunctionalParameter HighANet = new FunctionalParameter("HighANet") {
         public double getValue() { return highA.getValue() * fadeA.getValue(); }
     };
     public final FunctionalParameter HighBNet = new FunctionalParameter("HighBNet") {
         public double getValue() { return highB.getValue() * fadeB.getValue(); }
+    };
+    public final BoundedFunctionalParameter HighNet = new BoundedFunctionalParameter("HighNet") {
+        public double computeValue() {return Math.max(highA.getValue() * fadeA.getValue(), highB.getValue() * fadeB.getValue()); }
     };
 
     
@@ -240,10 +249,13 @@ public class AudioBridgePattern extends JoulePattern {
         // Calculated values
         addParameter(this.LowANet);
         addParameter(this.LowBNet);
+        addParameter(this.LowNet);
         addParameter(this.MidANet);
         addParameter(this.MidBNet);
+        addParameter(this.MidNet);
         addParameter(this.HighANet);
         addParameter(this.HighBNet);        
+        addParameter(this.HighNet);
         addParameter(this.LevelANet);
         addParameter(this.LevelBNet);
         addParameter(this.ColorANet);

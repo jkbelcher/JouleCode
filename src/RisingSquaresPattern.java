@@ -55,8 +55,8 @@ public class RisingSquaresPattern extends JoulePattern {
     }
     
     public void onActive() {
-        initialize();
         super.onActive();
+        initialize();
     }
 
     private void initialize() {        

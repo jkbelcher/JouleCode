@@ -63,6 +63,11 @@ public abstract class RandomizableLXPattern extends LXPattern {
         parameter.setValue(newValue);
     }
 
+    public static void randomizeParameter(BooleanParameter parameter) {
+        boolean newValue = Math.random() >= 0.5 ? true : false;
+        parameter.setValue(newValue);
+    }
+
     public int getRandomColor() {
         return this.getRandomColor(100);
     }

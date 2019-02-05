@@ -12,9 +12,10 @@ public class OneThingBlend extends NormalizedScopeBlend {
         super(lx);
         
         this.addBlends(new NormalizedScopeBlend[]{
-                new HorizWipeBlend(lx),
-                new SphereBlend(lx),
-                new AddNormalizedBlend(lx)
+                //new HorizWipeBlend(lx),
+                //new SphereBlend(lx),
+                //new AddNormalizedBlend(lx),
+                new ClockBlend(lx)
                 });
     }
     

@@ -101,7 +101,7 @@ public class SimpleChasePattern extends JoulePattern {
                 colors[this.model.points[i].index] = fgColor;
             } else {
                 // Background color
-                colors[this.model.points[i].index] = bgColor;
+                colors[this.model.points[i].index] = LXColor.scaleBrightness(bgColor, brightnessBg);
             }
         }
     }
